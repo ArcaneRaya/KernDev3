@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MainController : MonoBehaviour {
-    [SerializeField] private List<BaseController> controllers;
-    [SerializeField] private GameObject pausedUIOverlay;
+    [SerializeField] private List<BaseController> controllers = new List<BaseController>();
+    [SerializeField] private GameObject pausedUIOverlay = null;
 
     private bool isGameRunning;
 

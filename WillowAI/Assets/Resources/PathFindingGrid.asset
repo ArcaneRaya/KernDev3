@@ -1,0 +1,625 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6a117efaa1ab7f46bcd936d2d231908, type: 3}
+  m_Name: PathFindingGrid
+  m_EditorClassIdentifier: 
+  Floor:
+    serializedVersion: 2
+    m_Bits: 256
+  Obstacle:
+    serializedVersion: 2
+    m_Bits: 512
+  NodeSize: 1
+  UnitHeight: 6
+  rowAmount: 10
+  columnAmount: 10
+  Nodes:
+  - GridX: 0
+    GridY: 0
+    Height: 9.992007e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -4.5, y: -4.5}
+  - GridX: 0
+    GridY: 1
+    Height: 7.771561e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -4.5, y: -3.5}
+  - GridX: 0
+    GridY: 2
+    Height: 5.551115e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -4.5, y: -2.5}
+  - GridX: 0
+    GridY: 3
+    Height: 3.3306692e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -4.5, y: -1.5}
+  - GridX: 0
+    GridY: 4
+    Height: 1.1102229e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -4.5, y: -0.5}
+  - GridX: 0
+    GridY: 5
+    Height: -1.11022296e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -4.5, y: 0.5}
+  - GridX: 0
+    GridY: 6
+    Height: -3.3306692e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -4.5, y: 1.5}
+  - GridX: 0
+    GridY: 7
+    Height: -5.5511148e-17
+    IsObstacle: 1
+    IsWalkable: 0
+    FlatWorldPosition: {x: -4.5, y: 2.5}
+  - GridX: 0
+    GridY: 8
+    Height: -7.771561e-17
+    IsObstacle: 1
+    IsWalkable: 0
+    FlatWorldPosition: {x: -4.5, y: 3.5}
+  - GridX: 0
+    GridY: 9
+    Height: -9.992007e-17
+    IsObstacle: 1
+    IsWalkable: 0
+    FlatWorldPosition: {x: -4.5, y: 4.5}
+  - GridX: 1
+    GridY: 0
+    Height: 9.992007e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -3.5, y: -4.5}
+  - GridX: 1
+    GridY: 1
+    Height: 7.771561e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -3.5, y: -3.5}
+  - GridX: 1
+    GridY: 2
+    Height: 5.551115e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -3.5, y: -2.5}
+  - GridX: 1
+    GridY: 3
+    Height: 3.3306692e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -3.5, y: -1.5}
+  - GridX: 1
+    GridY: 4
+    Height: 1.110223e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -3.5, y: -0.5}
+  - GridX: 1
+    GridY: 5
+    Height: -1.11022296e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -3.5, y: 0.5}
+  - GridX: 1
+    GridY: 6
+    Height: -3.330669e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -3.5, y: 1.5}
+  - GridX: 1
+    GridY: 7
+    Height: -5.551115e-17
+    IsObstacle: 1
+    IsWalkable: 0
+    FlatWorldPosition: {x: -3.5, y: 2.5}
+  - GridX: 1
+    GridY: 8
+    Height: -7.771561e-17
+    IsObstacle: 1
+    IsWalkable: 0
+    FlatWorldPosition: {x: -3.5, y: 3.5}
+  - GridX: 1
+    GridY: 9
+    Height: -9.992007e-17
+    IsObstacle: 1
+    IsWalkable: 0
+    FlatWorldPosition: {x: -3.5, y: 4.5}
+  - GridX: 2
+    GridY: 0
+    Height: 9.992007e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -2.5, y: -4.5}
+  - GridX: 2
+    GridY: 1
+    Height: 7.771561e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -2.5, y: -3.5}
+  - GridX: 2
+    GridY: 2
+    Height: 5.551115e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -2.5, y: -2.5}
+  - GridX: 2
+    GridY: 3
+    Height: 3.3306692e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -2.5, y: -1.5}
+  - GridX: 2
+    GridY: 4
+    Height: 1.1102229e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -2.5, y: -0.5}
+  - GridX: 2
+    GridY: 5
+    Height: -1.1102228e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -2.5, y: 0.5}
+  - GridX: 2
+    GridY: 6
+    Height: -3.3306692e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -2.5, y: 1.5}
+  - GridX: 2
+    GridY: 7
+    Height: -5.551115e-17
+    IsObstacle: 1
+    IsWalkable: 0
+    FlatWorldPosition: {x: -2.5, y: 2.5}
+  - GridX: 2
+    GridY: 8
+    Height: -7.771561e-17
+    IsObstacle: 1
+    IsWalkable: 0
+    FlatWorldPosition: {x: -2.5, y: 3.5}
+  - GridX: 2
+    GridY: 9
+    Height: -9.992007e-17
+    IsObstacle: 1
+    IsWalkable: 0
+    FlatWorldPosition: {x: -2.5, y: 4.5}
+  - GridX: 3
+    GridY: 0
+    Height: 9.992007e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -1.5, y: -4.5}
+  - GridX: 3
+    GridY: 1
+    Height: 7.771561e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -1.5, y: -3.5}
+  - GridX: 3
+    GridY: 2
+    Height: 5.551115e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -1.5, y: -2.5}
+  - GridX: 3
+    GridY: 3
+    Height: 3.3306692e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -1.5, y: -1.5}
+  - GridX: 3
+    GridY: 4
+    Height: 1.1102231e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -1.5, y: -0.5}
+  - GridX: 3
+    GridY: 5
+    Height: -1.110223e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -1.5, y: 0.5}
+  - GridX: 3
+    GridY: 6
+    Height: -3.3306692e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -1.5, y: 1.5}
+  - GridX: 3
+    GridY: 7
+    Height: -5.551115e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -1.5, y: 2.5}
+  - GridX: 3
+    GridY: 8
+    Height: -7.771562e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -1.5, y: 3.5}
+  - GridX: 3
+    GridY: 9
+    Height: -9.9920076e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -1.5, y: 4.5}
+  - GridX: 4
+    GridY: 0
+    Height: 9.992007e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -0.5, y: -4.5}
+  - GridX: 4
+    GridY: 1
+    Height: 7.771561e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -0.5, y: -3.5}
+  - GridX: 4
+    GridY: 2
+    Height: 5.551115e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -0.5, y: -2.5}
+  - GridX: 4
+    GridY: 3
+    Height: 3.3306692e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -0.5, y: -1.5}
+  - GridX: 4
+    GridY: 4
+    Height: 1.110223e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -0.5, y: -0.5}
+  - GridX: 4
+    GridY: 5
+    Height: -1.11022296e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -0.5, y: 0.5}
+  - GridX: 4
+    GridY: 6
+    Height: -3.3306692e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -0.5, y: 1.5}
+  - GridX: 4
+    GridY: 7
+    Height: -5.551115e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -0.5, y: 2.5}
+  - GridX: 4
+    GridY: 8
+    Height: -7.771562e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -0.5, y: 3.5}
+  - GridX: 4
+    GridY: 9
+    Height: -9.9920076e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: -0.5, y: 4.5}
+  - GridX: 5
+    GridY: 0
+    Height: 9.992007e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 0.5, y: -4.5}
+  - GridX: 5
+    GridY: 1
+    Height: 7.771561e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 0.5, y: -3.5}
+  - GridX: 5
+    GridY: 2
+    Height: 5.551115e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 0.5, y: -2.5}
+  - GridX: 5
+    GridY: 3
+    Height: 3.3306692e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 0.5, y: -1.5}
+  - GridX: 5
+    GridY: 4
+    Height: 1.110223e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 0.5, y: -0.5}
+  - GridX: 5
+    GridY: 5
+    Height: -1.110223e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 0.5, y: 0.5}
+  - GridX: 5
+    GridY: 6
+    Height: -3.3306692e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 0.5, y: 1.5}
+  - GridX: 5
+    GridY: 7
+    Height: -5.551115e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 0.5, y: 2.5}
+  - GridX: 5
+    GridY: 8
+    Height: -7.771562e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 0.5, y: 3.5}
+  - GridX: 5
+    GridY: 9
+    Height: -9.9920076e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 0.5, y: 4.5}
+  - GridX: 6
+    GridY: 0
+    Height: 9.992007e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 1.5, y: -4.5}
+  - GridX: 6
+    GridY: 1
+    Height: 7.771561e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 1.5, y: -3.5}
+  - GridX: 6
+    GridY: 2
+    Height: 5.551115e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 1.5, y: -2.5}
+  - GridX: 6
+    GridY: 3
+    Height: 3.3306692e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 1.5, y: -1.5}
+  - GridX: 6
+    GridY: 4
+    Height: 1.110223e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 1.5, y: -0.5}
+  - GridX: 6
+    GridY: 5
+    Height: -1.11022296e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 1.5, y: 0.5}
+  - GridX: 6
+    GridY: 6
+    Height: -3.3306692e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 1.5, y: 1.5}
+  - GridX: 6
+    GridY: 7
+    Height: -5.551115e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 1.5, y: 2.5}
+  - GridX: 6
+    GridY: 8
+    Height: -7.771562e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 1.5, y: 3.5}
+  - GridX: 6
+    GridY: 9
+    Height: -9.9920076e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 1.5, y: 4.5}
+  - GridX: 7
+    GridY: 0
+    Height: 9.992007e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 2.5, y: -4.5}
+  - GridX: 7
+    GridY: 1
+    Height: 7.771561e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 2.5, y: -3.5}
+  - GridX: 7
+    GridY: 2
+    Height: 5.551115e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 2.5, y: -2.5}
+  - GridX: 7
+    GridY: 3
+    Height: 3.3306692e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 2.5, y: -1.5}
+  - GridX: 7
+    GridY: 4
+    Height: 1.1102231e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 2.5, y: -0.5}
+  - GridX: 7
+    GridY: 5
+    Height: -1.11022296e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 2.5, y: 0.5}
+  - GridX: 7
+    GridY: 6
+    Height: -3.3306692e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 2.5, y: 1.5}
+  - GridX: 7
+    GridY: 7
+    Height: -5.551115e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 2.5, y: 2.5}
+  - GridX: 7
+    GridY: 8
+    Height: -7.771562e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 2.5, y: 3.5}
+  - GridX: 7
+    GridY: 9
+    Height: -9.9920076e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 2.5, y: 4.5}
+  - GridX: 8
+    GridY: 0
+    Height: 9.992007e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 3.5, y: -4.5}
+  - GridX: 8
+    GridY: 1
+    Height: 7.771561e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 3.5, y: -3.5}
+  - GridX: 8
+    GridY: 2
+    Height: 5.551115e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 3.5, y: -2.5}
+  - GridX: 8
+    GridY: 3
+    Height: 3.3306692e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 3.5, y: -1.5}
+  - GridX: 8
+    GridY: 4
+    Height: 1.110223e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 3.5, y: -0.5}
+  - GridX: 8
+    GridY: 5
+    Height: -1.1102231e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 3.5, y: 0.5}
+  - GridX: 8
+    GridY: 6
+    Height: -3.3306692e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 3.5, y: 1.5}
+  - GridX: 8
+    GridY: 7
+    Height: -5.551115e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 3.5, y: 2.5}
+  - GridX: 8
+    GridY: 8
+    Height: -7.771562e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 3.5, y: 3.5}
+  - GridX: 8
+    GridY: 9
+    Height: -9.992007e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 3.5, y: 4.5}
+  - GridX: 9
+    GridY: 0
+    Height: 9.992007e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 4.5, y: -4.5}
+  - GridX: 9
+    GridY: 1
+    Height: 7.771561e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 4.5, y: -3.5}
+  - GridX: 9
+    GridY: 2
+    Height: 5.551115e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 4.5, y: -2.5}
+  - GridX: 9
+    GridY: 3
+    Height: 3.3306692e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 4.5, y: -1.5}
+  - GridX: 9
+    GridY: 4
+    Height: 1.110223e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 4.5, y: -0.5}
+  - GridX: 9
+    GridY: 5
+    Height: -1.1102231e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 4.5, y: 0.5}
+  - GridX: 9
+    GridY: 6
+    Height: -3.3306692e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 4.5, y: 1.5}
+  - GridX: 9
+    GridY: 7
+    Height: -5.551115e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 4.5, y: 2.5}
+  - GridX: 9
+    GridY: 8
+    Height: -7.771562e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 4.5, y: 3.5}
+  - GridX: 9
+    GridY: 9
+    Height: -9.992007e-17
+    IsObstacle: 0
+    IsWalkable: 1
+    FlatWorldPosition: {x: 4.5, y: 4.5}
