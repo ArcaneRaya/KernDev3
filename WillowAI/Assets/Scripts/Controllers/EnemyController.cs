@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyController : BaseController {
 
-    [SerializeField] private List<Whisp> whisps;
+    [SerializeField] private List<Whisp> whisps = new List<Whisp>();
 
     protected override void OnInitialize(MainController mainController) {
         foreach (Whisp whisp in whisps) {
