@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour, IAgent {
+public class Player : MonoSingleton<Player>, IAgent {
 
     public Vector3 Position {
         get {
