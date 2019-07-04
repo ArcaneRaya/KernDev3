@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : BaseController {
 
+    public Player player;
+
     protected override void OnInitialize(List<BaseController> controllers) {
 
     }
@@ -13,6 +15,6 @@ public class PlayerController : BaseController {
     }
 
     protected override void OnTick(float deltaTime) {
-
+        player.Tick(deltaTime);
     }
 }
