@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class EnemyController : BaseController {
 
-    protected override void OnInitialize(List<BaseController> controllers) {
+    [SerializeField] private List<Whisp> whisps;
 
+    protected override void OnInitialize(List<BaseController> controllers) {
+        foreach (Whisp whisp in whisps) {
+            whisp.Initialize();
+        }
     }
 
     protected override void OnSetup() {
@@ -13,6 +17,8 @@ public class EnemyController : BaseController {
     }
 
     protected override void OnTick(float deltaTime) {
-
+        foreach (Whisp whisp in whisps) {
+            whisp.Tick(deltaTime);
+        }
     }
 }

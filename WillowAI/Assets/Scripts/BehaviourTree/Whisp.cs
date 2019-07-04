@@ -4,16 +4,52 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-public class BehaviourTree : MonoBehaviour {
+public class Whisp : MonoBehaviour, IAgent {
     private Node Root;
     private NavMeshAgent myNavMeshAgent;
     private Rigidbody myRigidbody;
-    [SerializeField] private GameObject player;
     [SerializeField] private float ViewRange;
 
     private bool targetSet = false;
     private float distanceWalk = 5f;
     private Vector3 targetPosition;
+
+    public Vector3 Position {
+        get {
+            return transform.position;
+        }
+    }
+
+    public float Speed {
+        get {
+            return speed;
+        }
+    }
+
+    [SerializeField] private PathfindingAgent pathfindingAgent = null;
+    [SerializeField] private float speed = 5;
+
+    public void Initialize() {
+        pathfindingAgent.Initialize(this);
+        pathfindingAgent.OnDestinationReachedAction += DestinationReached;
+    }
+
+    public void Tick(float deltaTime) {
+        pathfindingAgent.Tick(deltaTime);
+        Root.Evaluate();
+    }
+
+    public void SetPosition(Vector3 position) {
+        transform.position = position;
+    }
+
+    private void OnDestroy() {
+        
+    }
+
+    private void DestinationReached() {
+        targetSet = false;
+    }
 
     // Start is called before the first frame update
     void Start() {
@@ -29,11 +65,6 @@ public class BehaviourTree : MonoBehaviour {
         Root = RootSequence;
     }
 
-    // Update is called once per frame
-    void Update() {
-        Root.Evaluate();
-    }
-
     private NodeStates SetExploringTarget() {
         if (targetSet)
             return NodeStates.RUNNING;
@@ -45,8 +76,7 @@ public class BehaviourTree : MonoBehaviour {
     }
 
     private NodeStates MoveTowards() {
-        myNavMeshAgent.isStopped = false;
-        myNavMeshAgent.SetDestination(targetPosition);
+        pathfindingAgent.MoveTowards(targetPosition);
         return NodeStates.RUNNING;
     }
 
