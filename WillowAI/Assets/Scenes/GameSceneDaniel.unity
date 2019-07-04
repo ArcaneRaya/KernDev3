@@ -168,6 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathfindingAgent: {fileID: 80146858}
   speed: 5
+  pickupRange: 2
 --- !u!65 &80146857
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1524,6 +1525,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 868b65c39033a7543b0bb5a1d186e5c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentPrefab: {fileID: 0}
+  potentialFragmentLocations: []
+  fragmentSpawnAmount: 10
 --- !u!4 &2060942999
 Transform:
   m_ObjectHideFlags: 0
@@ -1583,9 +1587,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f435c9a51d5063641b96b5168ed9ec69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ViewRange: 0
+  distanceWalk: 5
   pathfindingAgent: {fileID: 2084056090}
   speed: 5
+  fragmentViewRange: 10
+  fragmentPickupRange: 2
+  fragmentPickupTime: 1
 --- !u!114 &2084056090
 MonoBehaviour:
   m_ObjectHideFlags: 0

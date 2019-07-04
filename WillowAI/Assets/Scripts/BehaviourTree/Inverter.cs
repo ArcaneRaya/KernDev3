@@ -33,4 +33,8 @@ public class Inverter : Node {
         m_nodeState = NodeStates.SUCCESS;
         return m_nodeState;
     }
+
+    public override void CancelNode() {
+        node.CancelNode();
+    }
 }

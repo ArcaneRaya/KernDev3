@@ -20,6 +20,8 @@ public abstract class Node {
     /* Implementing classes use this method to evaluate the desired set of conditions */
     public abstract NodeStates Evaluate(float deltaTime);
 
+    public abstract void CancelNode();
+
 }
 
 public enum NodeStates {

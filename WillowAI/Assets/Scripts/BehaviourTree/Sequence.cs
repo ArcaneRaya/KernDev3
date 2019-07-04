@@ -34,4 +34,10 @@ public class Sequence : Node {
         m_nodeState = anyChildRunning ? NodeStates.RUNNING : NodeStates.SUCCESS;
         return m_nodeState;
     }
+
+    public override void CancelNode() {
+        foreach (Node node in m_nodes) {
+            node.CancelNode();
+        }
+    }
 }

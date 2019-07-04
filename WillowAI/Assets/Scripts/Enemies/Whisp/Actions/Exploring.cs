@@ -7,8 +7,8 @@ namespace WhispActions {
     public class Exploring : ActionNode<Whisp> {
 
         private Vector3 targetPosition = Vector3.zero;
-        private bool targetSet = false;
-        private float timeWaiting;
+        private bool isTargetSet = false;
+        private float timeSinceLastExploration;
         private float targetWaitTime;
         private float minWaitTime = 0.4f;
         private float maxWaitTime = 5;
@@ -18,32 +18,37 @@ namespace WhispActions {
         }
 
         public override NodeStates MyAction(Whisp target, float deltaTime) {
-            timeWaiting += deltaTime;
-
-            if (timeWaiting < targetWaitTime) {
+            if (timeSinceLastExploration + targetWaitTime > MainController.Instance.GameTime) {
                 return NodeStates.FAILURE;
             }
 
-            if (targetSet) {
+            if (isTargetSet) {
                 return NodeStates.RUNNING;
             }
 
             targetPosition = new Vector3(UnityEngine.Random.Range(-target.distanceWalk, target.distanceWalk), target.transform.position.y, UnityEngine.Random.Range(-target.distanceWalk, target.distanceWalk));
             target.PathFindingAgent.MoveTowards(targetPosition);
             target.PathFindingAgent.OnDestinationReachedAction += OnDestinationReached;
-            targetSet = true;
+            isTargetSet = true;
             return NodeStates.SUCCESS;
         }
 
         private void OnDestinationReached() {
             target.PathFindingAgent.OnDestinationReachedAction -= OnDestinationReached;
-            targetSet = false;
+            isTargetSet = false;
             ResetWaitTime();
         }
 
         private void ResetWaitTime() {
-            timeWaiting = 0;
+            timeSinceLastExploration = MainController.Instance.GameTime;
             targetWaitTime = UnityEngine.Random.Range(minWaitTime, maxWaitTime);
+        }
+
+        public override void CancelNode() {
+            if (isTargetSet) {
+                target.PathFindingAgent.OnDestinationReachedAction -= OnDestinationReached;
+                isTargetSet = false;
+            }
         }
     }
 }

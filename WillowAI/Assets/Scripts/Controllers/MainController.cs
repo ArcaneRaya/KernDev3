@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainController : MonoBehaviour {
+public class MainController : MonoSingleton<MainController> {
+    public float GameTime { get; private set; }
+
     [SerializeField] private List<BaseController> controllers = new List<BaseController>();
     [SerializeField] private GameObject pausedUIOverlay = null;
 
@@ -50,6 +52,8 @@ public class MainController : MonoBehaviour {
         HandleInput();
 
         if (isGameRunning == false) { return; }
+
+        GameTime += Time.deltaTime;
 
         foreach (BaseController controller in controllers) {
             controller.Tick(Time.deltaTime);

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T> {
 
-    public static MonoSingleton<T> Instance {
+    public static T Instance {
         get {
             if (internalInstance == null) {
                 internalInstance = GetInstance();
@@ -14,10 +14,10 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T> {
         }
     }
 
-    private static MonoSingleton<T> internalInstance;
+    private static T internalInstance;
 
-    private static MonoSingleton<T> GetInstance() {
-        MonoSingleton<T>[] potentialInstances = FindObjectsOfType<MonoSingleton<T>>();
+    private static T GetInstance() {
+        T[] potentialInstances = FindObjectsOfType<T>();
         if (potentialInstances.Length == 0) {
             throw new Exception("Could not find instance of " + typeof(MonoSingleton<T>));
         }

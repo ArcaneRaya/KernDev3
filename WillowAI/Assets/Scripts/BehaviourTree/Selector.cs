@@ -17,21 +17,21 @@ public class Selector : Node {
      * immediately report a success upwards. If all children fail, 
      * it will report a failure instead.*/
     public override NodeStates Evaluate(float deltaTime) {
+        m_nodeState = NodeStates.FAILURE;
         foreach (Node node in m_nodes) {
-            switch (node.Evaluate(deltaTime)) {
-                case NodeStates.FAILURE:
-                    continue;
-                case NodeStates.SUCCESS:
-                    m_nodeState = NodeStates.SUCCESS;
-                    return m_nodeState;
-                case NodeStates.RUNNING:
-                    m_nodeState = NodeStates.RUNNING;
-                    return m_nodeState;
-                default:
-                    continue;
+            if (m_nodeState == NodeStates.FAILURE) {
+                m_nodeState = node.Evaluate(deltaTime);
+            }
+            else {
+                node.CancelNode();
             }
         }
-        m_nodeState = NodeStates.FAILURE;
         return m_nodeState;
+    }
+
+    public override void CancelNode() {
+        foreach (Node node in m_nodes) {
+            node.CancelNode();
+        }
     }
 }

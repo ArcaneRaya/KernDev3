@@ -12,6 +12,11 @@ public interface IAgent {
 public class PathfindingAgent : MonoBehaviour {
 
     public Action OnDestinationReachedAction;
+    public bool IsMoving {
+        get {
+            return !(currentPath == null || currentPath.Count == 0);
+        }
+    }
 
     private PathfindingController pathfindingController;
     private IAgent agent;
@@ -29,8 +34,9 @@ public class PathfindingAgent : MonoBehaviour {
     public void Tick(float elapsedTime) {
         if (currentPath.Count > 0) {
             UpdateMovement(elapsedTime);
-        } else {
-            if(destinationReachedFired == false) {
+        }
+        else {
+            if (destinationReachedFired == false) {
                 if (OnDestinationReachedAction != null) {
                     OnDestinationReachedAction();
                 }
@@ -75,6 +81,8 @@ public class PathfindingAgent : MonoBehaviour {
     }
 
     public void Stop() {
-        currentPath.Clear();
+        if (currentPath != null) {
+            currentPath.Clear();
+        }
     }
 }
