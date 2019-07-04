@@ -16,9 +16,9 @@ public class Selector : Node {
     /* If any of the children reports a success, the selector will 
      * immediately report a success upwards. If all children fail, 
      * it will report a failure instead.*/
-    public override NodeStates Evaluate() {
+    public override NodeStates Evaluate(float deltaTime) {
         foreach (Node node in m_nodes) {
-            switch (node.Evaluate()) {
+            switch (node.Evaluate(deltaTime)) {
                 case NodeStates.FAILURE:
                     continue;
                 case NodeStates.SUCCESS:

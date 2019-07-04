@@ -13,11 +13,11 @@ public class Sequence : Node {
 
     /* If any child node returns a failure, the entire node fails. Whence all  
      * nodes return a success, the node reports a success. */
-    public override NodeStates Evaluate() {
+    public override NodeStates Evaluate(float deltaTime) {
         bool anyChildRunning = false;
 
         foreach (Node node in m_nodes) {
-            switch (node.Evaluate()) {
+            switch (node.Evaluate(deltaTime)) {
                 case NodeStates.FAILURE:
                     m_nodeState = NodeStates.FAILURE;
                     return m_nodeState;

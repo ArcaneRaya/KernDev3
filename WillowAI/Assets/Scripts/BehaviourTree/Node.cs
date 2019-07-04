@@ -18,7 +18,7 @@ public abstract class Node {
     public Node() { }
 
     /* Implementing classes use this method to evaluate the desired set of conditions */
-    public abstract NodeStates Evaluate();
+    public abstract NodeStates Evaluate(float deltaTime);
 
 }
 

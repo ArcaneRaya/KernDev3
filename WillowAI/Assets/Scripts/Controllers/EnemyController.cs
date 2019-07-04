@@ -13,7 +13,9 @@ public class EnemyController : BaseController {
     }
 
     protected override void OnSetup() {
-
+        foreach (Whisp whisp in whisps) {
+            whisp.OnSetup();
+        }
     }
 
     protected override void OnTick(float deltaTime) {

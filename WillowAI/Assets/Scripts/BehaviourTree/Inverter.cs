@@ -18,8 +18,8 @@ public class Inverter : Node {
     /* Reports a success if the child fails and 
      * a failure if the child succeeds. Running will report 
      * as running */
-    public override NodeStates Evaluate() {
-        switch (m_node.Evaluate()) {
+    public override NodeStates Evaluate(float deltaTime) {
+        switch (m_node.Evaluate(deltaTime)) {
             case NodeStates.FAILURE:
                 m_nodeState = NodeStates.SUCCESS;
                 return m_nodeState;

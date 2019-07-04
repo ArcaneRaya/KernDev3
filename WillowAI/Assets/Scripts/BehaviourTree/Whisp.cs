@@ -10,9 +10,10 @@ public class Whisp : MonoBehaviour, IAgent {
     private Rigidbody myRigidbody;
     [SerializeField] private float ViewRange;
 
-    private bool targetSet = false;
-    private float distanceWalk = 5f;
-    private Vector3 targetPosition;
+    public bool targetSet = false;
+
+    public float distanceWalk = 5f;
+    public Vector3 targetPosition;
 
     public Vector3 Position {
         get {
@@ -34,9 +35,21 @@ public class Whisp : MonoBehaviour, IAgent {
         pathfindingAgent.OnDestinationReachedAction += DestinationReached;
     }
 
+    public void OnSetup() {
+        myNavMeshAgent = GetComponent<NavMeshAgent>();
+        myRigidbody = GetComponent<Rigidbody>();
+
+        ActionNode<Whisp> SetExploringTargetAction = new Exploring(this);
+
+        Selector RootSelector = new Selector(new List<Node>() { SetExploringTargetAction });
+        Sequence RootSequence = new Sequence(new List<Node>() { RootSelector });
+
+        Root = RootSequence;
+    }
+
     public void Tick(float deltaTime) {
         pathfindingAgent.Tick(deltaTime);
-        Root.Evaluate();
+        Root.Evaluate(deltaTime);
     }
 
     public void SetPosition(Vector3 position) {
@@ -44,28 +57,14 @@ public class Whisp : MonoBehaviour, IAgent {
     }
 
     private void OnDestroy() {
-        
+        pathfindingAgent.OnDestinationReachedAction -= DestinationReached;
     }
 
     private void DestinationReached() {
         targetSet = false;
     }
 
-    // Start is called before the first frame update
-    void Start() {
-        myNavMeshAgent = GetComponent<NavMeshAgent>();
-        myRigidbody = GetComponent<Rigidbody>();
-
-        ActionNode SetExploringTargetAction = new ActionNode(SetExploringTarget);
-        ActionNode MoveTowardsAction = new ActionNode(MoveTowards);
-
-        Selector RootSelector = new Selector(new List<Node>() { SetExploringTargetAction });
-        Sequence RootSequence = new Sequence(new List<Node>() { RootSelector, MoveTowardsAction });
-
-        Root = RootSequence;
-    }
-
-    private NodeStates SetExploringTarget() {
+    private NodeStates SetExploringTarget(Whisp obj, float deltaTime) {
         if (targetSet)
             return NodeStates.RUNNING;
         else {
@@ -75,9 +74,16 @@ public class Whisp : MonoBehaviour, IAgent {
         }
     }
 
-    private NodeStates MoveTowards() {
+    private NodeStates MoveTowards(object obj, float deltaTime) {
         pathfindingAgent.MoveTowards(targetPosition);
         return NodeStates.RUNNING;
+    }
+
+    private NodeStates Flee(object obj, float deltaTime) {
+        if((Player.Instance.transform.position - transform.position).sqrMagnitude < ViewRange * ViewRange)
+            return NodeStates.RUNNING;
+
+        return NodeStates.FAILURE;
     }
 
     /*
