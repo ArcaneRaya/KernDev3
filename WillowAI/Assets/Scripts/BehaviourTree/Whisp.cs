@@ -50,6 +50,7 @@ public class Whisp : MonoBehaviour, IAgent {
     public void Tick(float deltaTime) {
         pathfindingAgent.Tick(deltaTime);
         Root.Evaluate(deltaTime);
+        MoveTowards(this, deltaTime);
     }
 
     public void SetPosition(Vector3 position) {
@@ -74,13 +75,13 @@ public class Whisp : MonoBehaviour, IAgent {
         }
     }
 
-    private NodeStates MoveTowards(object obj, float deltaTime) {
+    private NodeStates MoveTowards(Whisp obj, float deltaTime) {
         pathfindingAgent.MoveTowards(targetPosition);
         return NodeStates.RUNNING;
     }
 
     private NodeStates Flee(object obj, float deltaTime) {
-        if((Player.Instance.transform.position - transform.position).sqrMagnitude < ViewRange * ViewRange)
+        if ((Player.Instance.transform.position - transform.position).sqrMagnitude < ViewRange * ViewRange)
             return NodeStates.RUNNING;
 
         return NodeStates.FAILURE;
