@@ -9,5 +9,5 @@ public class FragmentLocation : MonoBehaviour {
         }
     }
 
-    [SerializeField] private Transform fragmentContainer;
+    [SerializeField] private Transform fragmentContainer = null;
 }

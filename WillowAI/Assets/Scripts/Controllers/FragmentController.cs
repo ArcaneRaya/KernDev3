@@ -1,16 +1,27 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class FragmentController : BaseController {
 
-    [SerializeField] private Fragment fragmentPrefab;
+    [SerializeField] private Fragment fragmentPrefab = null;
     [SerializeField] private List<FragmentLocation> potentialFragmentLocations = new List<FragmentLocation>();
     [SerializeField] private int fragmentSpawnAmount = 10;
 
     private List<Fragment> spawnedFragments = new List<Fragment>();
 
-    protected override void OnInitialize(List<BaseController> controllers) {
+    public List<Fragment> GetFragmentsInRange(Vector3 position, float pickupRange) {
+        List<Fragment> fragmentsInRange = new List<Fragment>();
+        foreach (Fragment fragment in spawnedFragments) {
+            if ((fragment.transform.position - position).sqrMagnitude < pickupRange * pickupRange) {
+                fragmentsInRange.Add(fragment);
+            }
+        }
+        return fragmentsInRange;
+    }
+
+    protected override void OnInitialize(MainController mainController) {
 
     }
 
@@ -18,12 +29,13 @@ public class FragmentController : BaseController {
         int fragmentsSpawned = 0;
         List<FragmentLocation> remainingLocations = potentialFragmentLocations;
         while (fragmentsSpawned < fragmentSpawnAmount && remainingLocations.Count > 0) {
-            int randomIndex = Random.Range(0, remainingLocations.Count);
+            int randomIndex = UnityEngine.Random.Range(0, remainingLocations.Count);
             FragmentLocation newLocation = remainingLocations[randomIndex];
             remainingLocations.Remove(newLocation);
             Fragment newFragment = Instantiate(fragmentPrefab.gameObject, newLocation.FragmentContainer).GetComponent<Fragment>();
             newFragment.transform.localPosition = Vector3.zero;
             newFragment.transform.localRotation = Quaternion.identity;
+            newFragment.OnPickedUpAction += OnFragmentPickup;
             spawnedFragments.Add(newFragment);
             fragmentsSpawned++;
         }
@@ -31,5 +43,9 @@ public class FragmentController : BaseController {
 
     protected override void OnTick(float deltaTime) {
 
+    }
+
+    private void OnFragmentPickup(Fragment fragment) {
+        spawnedFragments.Remove(fragment);
     }
 }

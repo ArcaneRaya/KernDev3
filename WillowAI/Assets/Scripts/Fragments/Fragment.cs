@@ -1,18 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fragment : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+[RequireComponent(typeof(Collider))]
+public class Fragment : MonoBehaviour {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public Action<Fragment> OnPickedUpAction;
+
+    public void Pickup() {
+        if (OnPickedUpAction != null) {
+            OnPickedUpAction(this);
+        }
+        Destroy(gameObject);
     }
 }

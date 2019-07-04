@@ -6,7 +6,7 @@ public class EnemyController : BaseController {
 
     [SerializeField] private List<Whisp> whisps;
 
-    protected override void OnInitialize(List<BaseController> controllers) {
+    protected override void OnInitialize(MainController mainController) {
         foreach (Whisp whisp in whisps) {
             whisp.Initialize();
         }

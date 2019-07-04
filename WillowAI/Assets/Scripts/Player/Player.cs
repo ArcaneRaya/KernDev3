@@ -19,26 +19,42 @@ public class Player : MonoSingleton<Player>, IAgent {
 
     [SerializeField] private PathfindingAgent pathfindingAgent = null;
     [SerializeField] private float speed = 5;
+    [SerializeField] private float pickupRange = 2f;
 
-    public void Initialize() {
+    private FragmentController fragmentController;
+    private int collectedFragmentAmount;
+
+    public void Initialize(FragmentController fragmentController) {
         pathfindingAgent.Initialize(this);
+        this.fragmentController = fragmentController;
     }
 
     public void Tick(float deltaTime) {
-        Vector3 inputDirection = HandleInput(deltaTime);
-        HandleMovement(inputDirection);
+        HandleMovement(deltaTime);
         pathfindingAgent.Tick(deltaTime);
+        HandlePickup();
     }
 
     public void SetPosition(Vector3 position) {
         transform.position = position;
     }
 
-    private void HandleMovement(Vector3 inputDirection) {
+    private void HandlePickup() {
+        if (Input.GetKeyDown(KeyCode.E)) {
+            List<Fragment> fragmentsInRange = fragmentController.GetFragmentsInRange(Position, pickupRange);
+            foreach (Fragment fragment in fragmentsInRange) {
+                fragment.Pickup();
+                collectedFragmentAmount++;
+            }
+        }
+    }
+
+    private void HandleMovement(float deltaTime) {
+        Vector3 inputDirection = HandleMovementInput(deltaTime);
         pathfindingAgent.MoveTowards(Position + inputDirection * speed);
     }
 
-    private Vector3 HandleInput(float deltaTime) {
+    private Vector3 HandleMovementInput(float deltaTime) {
         Vector3 moveDirection = Vector3.zero;
         if (Input.GetKey(KeyCode.W)) {
             moveDirection += transform.forward;
