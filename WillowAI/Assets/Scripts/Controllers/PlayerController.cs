@@ -7,7 +7,7 @@ public class PlayerController : BaseController {
     public Player player;
 
     protected override void OnInitialize(List<BaseController> controllers) {
-
+        player.Initialize();
     }
 
     protected override void OnSetup() {
