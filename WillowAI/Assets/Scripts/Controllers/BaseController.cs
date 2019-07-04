@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class BaseController : MonoBehaviour {
-    public void Initialize(List<BaseController> controllers) {
-        OnInitialize(controllers);
+    public void Initialize(MainController mainController) {
+        OnInitialize(mainController);
     }
 
     public void Setup() {
@@ -15,7 +15,7 @@ public abstract class BaseController : MonoBehaviour {
         OnTick(deltaTime);
     }
 
-    protected abstract void OnInitialize(List<BaseController> controllers);
+    protected abstract void OnInitialize(MainController mainController);
     protected abstract void OnSetup();
     protected abstract void OnTick(float deltaTime);
 }

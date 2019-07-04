@@ -19,10 +19,24 @@ public class MainController : MonoBehaviour {
         pausedUIOverlay.SetActive(true);
     }
 
+    public BaseController GetControllerOfType(Type type) {
+        if (type.IsSubclassOf(typeof(BaseController)) == false) {
+            throw new ArgumentException("Requested type has to be subclass of type: " + typeof(BaseController));
+        }
+
+        foreach (BaseController controller in controllers) {
+            if (controller.GetType() == type) {
+                return controller;
+            }
+        }
+
+        throw new ArgumentException("Could not find controller of type: " + type);
+    }
+
     private void Awake() {
         isGameRunning = false;
         foreach (BaseController controller in controllers) {
-            controller.Initialize(controllers);
+            controller.Initialize(this);
         }
     }
 
