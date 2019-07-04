@@ -17,7 +17,9 @@ public class EnemyController : BaseController {
     }
 
     protected override void OnSetup() {
-
+        foreach (Willow willow in willows) {
+            willow.Setup();
+        }
     }
 
     protected override void OnTick(float deltaTime) {

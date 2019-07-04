@@ -5,10 +5,20 @@ using UnityEngine;
 
 public class Willow : MonoBehaviour {
 
-    internal void Initialize() {
+    private Node Root;
+
+    public void Initialize() {
+        Selector rootSelector = new Selector(new List<Node>() { });
+        Sequence rootSequence = new Sequence(new List<Node>() { });
+
+        Root = rootSequence;
     }
 
-    internal void Tick(float deltaTime) {
+    public void Setup() {
 
+    }
+
+    public void Tick(float deltaTime) {
+        Root.Evaluate();
     }
 }
