@@ -9,8 +9,8 @@ public class Selector : Node {
 
     /** The constructor requires a lsit of child nodes to be  
      * passed in*/
-    public Selector(List<Node> nodes) {
-        m_nodes = nodes;
+    public Selector(params Node[] nodes) {
+        m_nodes = new List<Node>(nodes);
     }
 
     /* If any of the children reports a success, the selector will 
@@ -21,8 +21,7 @@ public class Selector : Node {
         foreach (Node node in m_nodes) {
             if (m_nodeState == NodeStates.FAILURE) {
                 m_nodeState = node.Evaluate(deltaTime);
-            }
-            else {
+            } else {
                 node.CancelNode();
             }
         }

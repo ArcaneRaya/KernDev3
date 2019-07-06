@@ -14,6 +14,7 @@ public class Whisp : MonoBehaviour, IAgent {
     public Vector3 Position { get { return transform.position; } }
     public float Speed { get { return speed; } }
     public float PlayerViewRange { get { return playerViewRange; } }
+    public float PlayerFleeRange { get { return playerFleeRange; } }
     public float FragmentViewRange { get { return fragmentViewRange; } }
     public float FragmentPickupRange { get { return fragmentPickupRange; } }
     public float FragmentPickupTime { get { return fragmentPickupTime; } }
@@ -22,10 +23,12 @@ public class Whisp : MonoBehaviour, IAgent {
     [SerializeField] private PathfindingAgent pathfindingAgent = null;
     [SerializeField] private float speed = 5f;
     [SerializeField] private float playerViewRange = 8f;
+    [SerializeField] private float playerFleeRange = 5f;
     [SerializeField] private float fragmentViewRange = 10f;
     [SerializeField] private float fragmentPickupRange = 2;
     [SerializeField] private float fragmentPickupTime = 1;
 
+    private ActionNode<Whisp> fleeingAction;
     private ActionNode<Whisp> allertingAction;
     private ActionNode<Whisp> collectingAction;
     private ActionNode<Whisp> exploringAction;
@@ -37,11 +40,12 @@ public class Whisp : MonoBehaviour, IAgent {
     }
 
     public void Setup() {
+        fleeingAction = new WhispActions.Fleeing(this);
         allertingAction = new WhispActions.Allerting(this);
         collectingAction = new WhispActions.Collecting(this);
         exploringAction = new WhispActions.Exploring(this);
 
-        Selector RootSelector = new Selector(new List<Node>() { allertingAction, collectingAction, exploringAction });
+        Selector RootSelector = new Selector(fleeingAction, allertingAction, collectingAction, exploringAction);
         //Sequence RootSequence = new Sequence(new List<Node>() { RootSelector });
 
         Root = RootSelector;
