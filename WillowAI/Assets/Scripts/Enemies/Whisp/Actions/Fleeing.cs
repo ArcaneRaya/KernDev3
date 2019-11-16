@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace WhispActions {
-    public class Fleeing : ActionNode<Whisp> {
+    public class Fleeing : InstanceBoundActionNode<Whisp> {
 
         private bool isFleeingFromPlayer;
 
         public Fleeing(Whisp target) : base(target) {
         }
 
-        public override NodeStates MyAction(Whisp target, float deltaTime) {
+        protected override NodeStates MyAction(float deltaTime) {
             if (isFleeingFromPlayer) {
                 return NodeStates.RUNNING;
             }
@@ -22,7 +22,7 @@ namespace WhispActions {
             }
 
             StartFleeing();
-            return NodeStates.SUCCESS;
+            return NodeStates.RUNNING;
         }
 
         private void StartFleeing() {
@@ -36,7 +36,7 @@ namespace WhispActions {
             isFleeingFromPlayer = false;
         }
 
-        public override void CancelNode() {
+        public override void Terminate() {
             if (isFleeingFromPlayer) {
                 target.PathFindingAgent.OnDestinationReachedAction -= OnDestinationReached;
                 isFleeingFromPlayer = false;

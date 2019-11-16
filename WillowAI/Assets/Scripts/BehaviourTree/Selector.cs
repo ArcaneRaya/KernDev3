@@ -1,36 +1,45 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿
+public class Selector : Composite {
 
-public class Selector : Node {
-    /** The child nodes for this selector */
-    protected List<Node> m_nodes = new List<Node>();
+    protected int currentSubNode = 0;
 
+    public Selector(params Node[] nodes) : base(nodes) {
 
-    /** The constructor requires a lsit of child nodes to be  
-     * passed in*/
-    public Selector(params Node[] nodes) {
-        m_nodes = new List<Node>(nodes);
     }
 
-    /* If any of the children reports a success, the selector will 
-     * immediately report a success upwards. If all children fail, 
-     * it will report a failure instead.*/
+    public override void Initialize() {
+        base.Initialize();
+        currentSubNode = 0;
+    }
+
     public override NodeStates Evaluate(float deltaTime) {
-        m_nodeState = NodeStates.FAILURE;
-        foreach (Node node in m_nodes) {
-            if (m_nodeState == NodeStates.FAILURE) {
-                m_nodeState = node.Evaluate(deltaTime);
-            } else {
-                node.CancelNode();
+        while (true) {
+            // initialize subnode if it has not yet been initialized
+            if (nodes[currentSubNode].CurrentNodeState == NodeStates.INVALID) {
+                nodes[currentSubNode].Initialize();
             }
-        }
-        return m_nodeState;
-    }
+            NodeStates currentSubNodeState = nodes[currentSubNode].Evaluate(deltaTime);
 
-    public override void CancelNode() {
-        foreach (Node node in m_nodes) {
-            node.CancelNode();
+            switch (currentSubNodeState) {
+                case NodeStates.RUNNING:
+                    currentNodeState = currentSubNodeState;
+                    return currentNodeState;
+                case NodeStates.SUCCESS:
+                    Terminate();
+                    return NodeStates.SUCCESS;
+                case NodeStates.FAILURE:
+                    // if ran through all subnodes in sequence, return failure
+                    if (currentSubNode + 1 == nodes.Length) {
+                        Terminate();
+                        return NodeStates.FAILURE;
+                    } else {
+                        nodes[currentSubNode].Terminate();
+                        currentSubNode++;
+                    }
+                    break;
+                case NodeStates.INVALID:
+                    throw new System.Exception("This should never happen!");
+            }
         }
     }
 }

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace WhispActions {
-    public class Allerting : ActionNode<Whisp> {
+    public class Allerting : InstanceBoundActionNode<Whisp> {
 
         public Allerting(Whisp target) : base(target) {
         }
 
-        public override NodeStates MyAction(Whisp target, float deltaTime) {
+        protected override NodeStates MyAction(float deltaTime) {
             bool isPlayerWithinViewRange = (Player.Instance.Position - target.Position).sqrMagnitude < target.PlayerViewRange * target.PlayerViewRange;
             if (isPlayerWithinViewRange == false) {
                 return NodeStates.FAILURE;
@@ -19,9 +19,6 @@ namespace WhispActions {
             }
 
             return NodeStates.RUNNING;
-        }
-
-        public override void CancelNode() {
         }
     }
 }

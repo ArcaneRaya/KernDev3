@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace WhispActions {
-    public class Exploring : ActionNode<Whisp> {
+    public class Exploring : InstanceBoundActionNode<Whisp> {
 
         private Vector3 targetPosition = Vector3.zero;
         private bool isTargetSet = false;
@@ -17,7 +17,7 @@ namespace WhispActions {
             ResetWaitTime();
         }
 
-        public override NodeStates MyAction(Whisp target, float deltaTime) {
+        protected override NodeStates MyAction(float deltaTime) {
             if (timeSinceLastExploration + targetWaitTime > MainController.Instance.GameTime) {
                 return NodeStates.FAILURE;
             }
@@ -30,7 +30,7 @@ namespace WhispActions {
             target.PathFindingAgent.MoveTowards(targetPosition);
             target.PathFindingAgent.OnDestinationReachedAction += OnDestinationReached;
             isTargetSet = true;
-            return NodeStates.SUCCESS;
+            return NodeStates.RUNNING;
         }
 
         private void OnDestinationReached() {
@@ -44,7 +44,7 @@ namespace WhispActions {
             targetWaitTime = UnityEngine.Random.Range(minWaitTime, maxWaitTime);
         }
 
-        public override void CancelNode() {
+        public override void Terminate() {
             if (isTargetSet) {
                 target.PathFindingAgent.OnDestinationReachedAction -= OnDestinationReached;
                 isTargetSet = false;

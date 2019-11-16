@@ -2,42 +2,47 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Sequence : Node {
-    /** Children nodes that belong to this sequence */
-    private List<Node> m_nodes = new List<Node>();
+public class Sequence : Composite {
 
-    /** Must provide an initial set of children nodes to work */
-    public Sequence(List<Node> nodes) {
-        m_nodes = nodes;
+    private int currentSubNode = 0;
+
+    public Sequence(params Node[] nodes) : base(nodes) {
+
     }
 
-    /* If any child node returns a failure, the entire node fails. Whence all  
-     * nodes return a success, the node reports a success. */
+    public override void Initialize() {
+        base.Initialize();
+        currentSubNode = 0;
+    }
+
     public override NodeStates Evaluate(float deltaTime) {
-        bool anyChildRunning = false;
-
-        foreach (Node node in m_nodes) {
-            switch (node.Evaluate(deltaTime)) {
-                case NodeStates.FAILURE:
-                    m_nodeState = NodeStates.FAILURE;
-                    return m_nodeState;
-                case NodeStates.SUCCESS:
-                    continue;
-                case NodeStates.RUNNING:
-                    anyChildRunning = true;
-                    continue;
-                default:
-                    m_nodeState = NodeStates.SUCCESS;
-                    return m_nodeState;
+        while (true) {
+            // initialize subnode if it has not yet been initialized
+            if (nodes[currentSubNode].CurrentNodeState == NodeStates.INVALID) {
+                nodes[currentSubNode].Initialize();
             }
-        }
-        m_nodeState = anyChildRunning ? NodeStates.RUNNING : NodeStates.SUCCESS;
-        return m_nodeState;
-    }
+            NodeStates currentSubNodeState = nodes[currentSubNode].Evaluate(deltaTime);
 
-    public override void CancelNode() {
-        foreach (Node node in m_nodes) {
-            node.CancelNode();
+            switch (currentSubNodeState) {
+                case NodeStates.RUNNING:
+                    currentNodeState = currentSubNodeState;
+                    return currentNodeState;
+                case NodeStates.FAILURE:
+                    Terminate();
+                    return NodeStates.FAILURE;
+                case NodeStates.SUCCESS:
+                    // if ran through all subnodes in sequence, return succes
+                    if (currentSubNode + 1 == nodes.Length) {
+                        Terminate();
+                        return NodeStates.SUCCESS;
+                    } else {
+                        nodes[currentSubNode].Terminate();
+                        currentSubNode++;
+                    }
+                    break;
+                case NodeStates.INVALID:
+                    throw new System.Exception("This should never happen!");
+            }
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace WhispActions {
-    public class Collecting : ActionNode<Whisp> {
+    public class Collecting : InstanceBoundActionNode<Whisp> {
 
         public bool IsCollectingFragment { get; private set; }
         private bool isWithinFragmentRange = false;
@@ -14,15 +14,14 @@ namespace WhispActions {
         public Collecting(Whisp target) : base(target) {
         }
 
-        public override NodeStates MyAction(Whisp target, float deltaTime) {
+        protected override NodeStates MyAction(float deltaTime) {
             if (IsCollectingFragment == false) {
                 List<Fragment> fragmentsInRange = target.FragmentController.GetFragmentsInRange(target.Position, target.FragmentViewRange);
                 if (fragmentsInRange.Count == 0) {
                     return NodeStates.FAILURE;
-                }
-                else {
+                } else {
                     StartCollecting(fragmentsInRange[UnityEngine.Random.Range(0, fragmentsInRange.Count)]);
-                    return NodeStates.SUCCESS;
+                    return NodeStates.RUNNING;
                 }
             }
 
@@ -32,6 +31,7 @@ namespace WhispActions {
                     IsCollectingFragment = false;
                     isWithinFragmentRange = false;
                     timeWaiting = 0;
+                    return NodeStates.SUCCESS;
                 }
             }
             return NodeStates.RUNNING;
@@ -53,7 +53,7 @@ namespace WhispActions {
             targetFragment = null;
         }
 
-        public override void CancelNode() {
+        public override void Terminate() {
             if (IsCollectingFragment && isWithinFragmentRange == false) {
                 target.PathFindingAgent.OnDestinationReachedAction -= OnDestinationReached;
             }

@@ -7,8 +7,9 @@ using UnityEngine.AI;
 public class Whisp : MonoBehaviour, IAgent {
 
     public float distanceWalk = 5f;
-    private Node Root;
 
+    //public StateMachine<Whisp> StateMachine { get; private set; }
+    public BehaviourTree BehaviourTree { get; private set; }
     public PathfindingAgent PathFindingAgent { get { return pathfindingAgent; } }
     public FragmentController FragmentController { get { return fragmentController; } }
     public Vector3 Position { get { return transform.position; } }
@@ -28,14 +29,15 @@ public class Whisp : MonoBehaviour, IAgent {
     [SerializeField] private float fragmentPickupRange = 2;
     [SerializeField] private float fragmentPickupTime = 1;
 
-    private ActionNode<Whisp> fleeingAction;
-    private ActionNode<Whisp> allertingAction;
-    private ActionNode<Whisp> collectingAction;
-    private ActionNode<Whisp> exploringAction;
+    private InstanceBoundActionNode<Whisp> fleeingAction;
+    private InstanceBoundActionNode<Whisp> allertingAction;
+    private InstanceBoundActionNode<Whisp> collectingAction;
+    private InstanceBoundActionNode<Whisp> exploringAction;
     private FragmentController fragmentController;
 
     public void Initialize(FragmentController fragmentController) {
         this.fragmentController = fragmentController;
+        //StateMachine = new StateMachine<Whisp>();
         pathfindingAgent.Initialize(this);
     }
 
@@ -45,15 +47,15 @@ public class Whisp : MonoBehaviour, IAgent {
         collectingAction = new WhispActions.Collecting(this);
         exploringAction = new WhispActions.Exploring(this);
 
-        Selector RootSelector = new Selector(fleeingAction, allertingAction, collectingAction, exploringAction);
+        ActiveSelector RootSelector = new ActiveSelector(fleeingAction, allertingAction, collectingAction, exploringAction);
         //Sequence RootSequence = new Sequence(new List<Node>() { RootSelector });
 
-        Root = RootSelector;
+        BehaviourTree = new BehaviourTree(RootSelector);
     }
 
     public void Tick(float deltaTime) {
         pathfindingAgent.Tick(deltaTime);
-        Root.Evaluate(deltaTime);
+        BehaviourTree.Tick(deltaTime);
     }
 
     public void SetPosition(Vector3 position) {

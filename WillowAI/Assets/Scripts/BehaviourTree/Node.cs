@@ -3,29 +3,32 @@ using System.Collections;
 
 [System.Serializable]
 public abstract class Node {
-
-    /* Delegate that returns the state of the node.*/
-    public delegate NodeStates NodeReturn();
-
     /* The current state of the node */
-    protected NodeStates m_nodeState;
+    public NodeStates CurrentNodeState { get { return currentNodeState; } }
+    protected NodeStates currentNodeState = NodeStates.INVALID;
 
     public NodeStates nodeState {
-        get { return m_nodeState; }
+        get { return currentNodeState; }
     }
 
-    /* The constructor for the node */
-    public Node() { }
+    public abstract void Initialize();
 
-    /* Implementing classes use this method to evaluate the desired set of conditions */
+    /// <summary>
+    /// Evaluate the Node for a NodeState result.
+    /// </summary>
+    /// <returns>The nodes current state.</returns>
+    /// <param name="deltaTime">Delta time.</param>
     public abstract NodeStates Evaluate(float deltaTime);
 
-    public abstract void CancelNode();
+    public virtual void Terminate() {
+        currentNodeState = NodeStates.INVALID;
+    }
 
 }
 
 public enum NodeStates {
     FAILURE,
     SUCCESS,
-    RUNNING
+    RUNNING,
+    INVALID
 }
