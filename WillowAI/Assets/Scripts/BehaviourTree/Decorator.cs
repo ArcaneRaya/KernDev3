@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using System;
+﻿
 
 public abstract class Decorator : Node {
 
@@ -10,7 +8,7 @@ public abstract class Decorator : Node {
         this.decoratedNode = decoratedNode ?? throw new System.ArgumentException("Node cannot be null");
     }
 
-    public override void Initialize() {
+    protected override void OnInitialize() {
         decoratedNode.Initialize();
     }
 
@@ -19,9 +17,9 @@ public abstract class Decorator : Node {
         return currentNodeState;
     }
 
-    public override void Terminate() {
+    protected override void OnTerminate() {
         decoratedNode.Terminate();
     }
 
-    protected abstract NodeStates MyAction(NodeStates nodeStates);
+    protected abstract NodeStates MyAction(NodeStates nodeState);
 }

@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿
 
 public abstract class Composite : Node {
 
@@ -13,18 +12,4 @@ public abstract class Composite : Node {
         }
         this.nodes = nodes;
     }
-
-    public override void Initialize() {
-        foreach (Node node in nodes) {
-            node.Initialize();
-        }
-    }
-
-    public override void Terminate() {
-        base.Terminate();
-        foreach (Node node in nodes) {
-            node.Terminate();
-        }
-    }
-
 }

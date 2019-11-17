@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-
+﻿
 public class Sequence : Composite {
 
     private int currentSubNode = 0;
@@ -10,8 +7,7 @@ public class Sequence : Composite {
 
     }
 
-    public override void Initialize() {
-        base.Initialize();
+    protected override void OnInitialize() {
         currentSubNode = 0;
     }
 
@@ -28,12 +24,12 @@ public class Sequence : Composite {
                     currentNodeState = currentSubNodeState;
                     return currentNodeState;
                 case NodeStates.FAILURE:
-                    Terminate();
+                    OnTerminate();
                     return NodeStates.FAILURE;
                 case NodeStates.SUCCESS:
                     // if ran through all subnodes in sequence, return succes
                     if (currentSubNode + 1 == nodes.Length) {
-                        Terminate();
+                        OnTerminate();
                         return NodeStates.SUCCESS;
                     } else {
                         nodes[currentSubNode].Terminate();
@@ -43,6 +39,12 @@ public class Sequence : Composite {
                 case NodeStates.INVALID:
                     throw new System.Exception("This should never happen!");
             }
+        }
+    }
+
+    protected override void OnTerminate() {
+        if (nodes[currentSubNode].CurrentNodeState != NodeStates.INVALID) {
+            nodes[currentSubNode].Terminate();
         }
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections;
 
 public abstract class Behaviour : Node {
-    public override void Initialize() {
+    protected override void OnInitialize() {
     }
 
     public override NodeStates Evaluate(float deltaTime) {
@@ -11,17 +11,17 @@ public abstract class Behaviour : Node {
         return currentNodeState;
     }
 
-    public override void Terminate() {
-        base.Terminate();
+    protected override void OnTerminate() {
+
     }
 
     protected abstract NodeStates MyAction(float deltaTime);
 }
 
-public abstract class InstanceBoundActionNode<T> : Behaviour {
+public abstract class InstanceBoundBehaviour<T> : Behaviour {
     protected T target;
 
-    public InstanceBoundActionNode(T target) {
+    public InstanceBoundBehaviour(T target) {
         this.target = target;
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace WhispActions {
-    public class Exploring : InstanceBoundActionNode<Whisp> {
+    public class Exploring : InstanceBoundBehaviour<Whisp> {
 
         private Vector3 targetPosition = Vector3.zero;
         private bool isTargetSet = false;
@@ -44,7 +44,8 @@ namespace WhispActions {
             targetWaitTime = UnityEngine.Random.Range(minWaitTime, maxWaitTime);
         }
 
-        public override void Terminate() {
+        protected override void OnTerminate() {
+            base.OnTerminate();
             if (isTargetSet) {
                 target.PathFindingAgent.OnDestinationReachedAction -= OnDestinationReached;
                 isTargetSet = false;

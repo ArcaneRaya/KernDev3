@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace WhispActions {
-    public class Collecting : InstanceBoundActionNode<Whisp> {
+    public class Collecting : InstanceBoundBehaviour<Whisp> {
 
         public bool IsCollectingFragment { get; private set; }
         private bool isWithinFragmentRange = false;
@@ -53,7 +53,8 @@ namespace WhispActions {
             targetFragment = null;
         }
 
-        public override void Terminate() {
+        protected override void OnTerminate() {
+            base.OnTerminate();
             if (IsCollectingFragment && isWithinFragmentRange == false) {
                 target.PathFindingAgent.OnDestinationReachedAction -= OnDestinationReached;
             }

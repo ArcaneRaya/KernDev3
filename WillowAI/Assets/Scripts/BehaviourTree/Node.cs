@@ -3,15 +3,17 @@ using System.Collections;
 
 [System.Serializable]
 public abstract class Node {
-    /* The current state of the node */
     public NodeStates CurrentNodeState { get { return currentNodeState; } }
     protected NodeStates currentNodeState = NodeStates.INVALID;
 
-    public NodeStates nodeState {
-        get { return currentNodeState; }
+    public void Initialize() {
+        if (currentNodeState != NodeStates.INVALID) {
+            Debug.LogWarning("Initialize was called on a Node that was not invalid. Is this intended?");
+        }
+        OnInitialize();
     }
 
-    public abstract void Initialize();
+    protected abstract void OnInitialize();
 
     /// <summary>
     /// Evaluate the Node for a NodeState result.
@@ -20,9 +22,12 @@ public abstract class Node {
     /// <param name="deltaTime">Delta time.</param>
     public abstract NodeStates Evaluate(float deltaTime);
 
-    public virtual void Terminate() {
+    public void Terminate() {
         currentNodeState = NodeStates.INVALID;
+        OnTerminate();
     }
+
+    protected abstract void OnTerminate();
 
 }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace WhispActions {
-    public class Allerting : InstanceBoundActionNode<Whisp> {
+    public class Allerting : InstanceBoundBehaviour<Whisp> {
 
         public Allerting(Whisp target) : base(target) {
         }

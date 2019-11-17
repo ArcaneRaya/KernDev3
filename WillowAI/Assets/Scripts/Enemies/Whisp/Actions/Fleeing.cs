@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace WhispActions {
-    public class Fleeing : InstanceBoundActionNode<Whisp> {
+    public class Fleeing : InstanceBoundBehaviour<Whisp> {
 
         private bool isFleeingFromPlayer;
 
@@ -36,7 +36,8 @@ namespace WhispActions {
             isFleeingFromPlayer = false;
         }
 
-        public override void Terminate() {
+        protected override void OnTerminate() {
+            base.OnTerminate();
             if (isFleeingFromPlayer) {
                 target.PathFindingAgent.OnDestinationReachedAction -= OnDestinationReached;
                 isFleeingFromPlayer = false;

@@ -29,10 +29,10 @@ public class Whisp : MonoBehaviour, IAgent {
     [SerializeField] private float fragmentPickupRange = 2;
     [SerializeField] private float fragmentPickupTime = 1;
 
-    private InstanceBoundActionNode<Whisp> fleeingAction;
-    private InstanceBoundActionNode<Whisp> allertingAction;
-    private InstanceBoundActionNode<Whisp> collectingAction;
-    private InstanceBoundActionNode<Whisp> exploringAction;
+    private InstanceBoundBehaviour<Whisp> fleeingAction;
+    private InstanceBoundBehaviour<Whisp> allertingAction;
+    private InstanceBoundBehaviour<Whisp> collectingAction;
+    private InstanceBoundBehaviour<Whisp> exploringAction;
     private FragmentController fragmentController;
 
     public void Initialize(FragmentController fragmentController) {

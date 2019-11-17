@@ -7,8 +7,7 @@ public class Selector : Composite {
 
     }
 
-    public override void Initialize() {
-        base.Initialize();
+    protected override void OnInitialize() {
         currentSubNode = 0;
     }
 
@@ -25,12 +24,12 @@ public class Selector : Composite {
                     currentNodeState = currentSubNodeState;
                     return currentNodeState;
                 case NodeStates.SUCCESS:
-                    Terminate();
+                    currentNodeState = currentSubNodeState;
                     return NodeStates.SUCCESS;
                 case NodeStates.FAILURE:
                     // if ran through all subnodes in sequence, return failure
                     if (currentSubNode + 1 == nodes.Length) {
-                        Terminate();
+                        currentNodeState = currentSubNodeState;
                         return NodeStates.FAILURE;
                     } else {
                         nodes[currentSubNode].Terminate();
@@ -40,6 +39,12 @@ public class Selector : Composite {
                 case NodeStates.INVALID:
                     throw new System.Exception("This should never happen!");
             }
+        }
+    }
+
+    protected override void OnTerminate() {
+        if (nodes[currentSubNode].CurrentNodeState != NodeStates.INVALID) {
+            nodes[currentSubNode].Terminate();
         }
     }
 }
