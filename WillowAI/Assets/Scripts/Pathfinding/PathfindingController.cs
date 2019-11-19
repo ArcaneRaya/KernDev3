@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathfindingController : MonoBehaviour {
+public class PathfindingController : MonoSingleton<PathfindingController> {
 
     public PathfindingGrid Grid;
 
@@ -25,12 +25,10 @@ public class PathfindingController : MonoBehaviour {
             if (node.IsObstacle) {
                 Gizmos.color = Color.red;
                 Gizmos.DrawCube(center, size);
-            }
-            else if (node.IsWalkable) {
+            } else if (node.IsWalkable) {
                 Gizmos.color = Color.cyan;
                 Gizmos.DrawWireCube(center, size);
-            }
-            else {
+            } else {
                 Debug.Log("whut?!" + node.WorldPosition);
                 continue;
             }
@@ -79,8 +77,7 @@ public class PathfindingController : MonoBehaviour {
                 if (neighbourNode == null) {
                     neighbourNode = new ConsideredNode(neighbour, currentNode, CalculateDirectTravelCost(neighbour, target));
                     Open.Add(neighbourNode);
-                }
-                else {
+                } else {
                     float newTravelCost = currentNode.TravelCost + CalculateDirectTravelCost(currentNode.Info, neighbour);
                     if (neighbourNode.TravelCost > newTravelCost) {
                         neighbourNode.SetParent(currentNode);
@@ -114,12 +111,10 @@ public class PathfindingController : MonoBehaviour {
                 currentX = MoveCloser(currentX, target.GridX);
                 currentY = MoveCloser(currentY, target.GridY);
                 cost += 14;
-            }
-            else if (currentX != target.GridX) {
+            } else if (currentX != target.GridX) {
                 currentX = MoveCloser(currentX, target.GridX);
                 cost += 10;
-            }
-            else if (currentY != target.GridY) {
+            } else if (currentY != target.GridY) {
                 currentY = MoveCloser(currentY, target.GridY);
                 cost += 10;
             }
@@ -134,8 +129,7 @@ public class PathfindingController : MonoBehaviour {
         }
         if (origin < target) {
             return origin + 1;
-        }
-        else {
+        } else {
             Debug.LogWarning("Could not move closer but was still called");
             return origin;
         }
@@ -150,11 +144,9 @@ public class PathfindingController : MonoBehaviour {
             get {
                 if (Parent == null) {
                     return 0;
-                }
-                else if (Parent.Info.GridX == Info.GridX || Parent.Info.GridY == Info.GridY) {
+                } else if (Parent.Info.GridX == Info.GridX || Parent.Info.GridY == Info.GridY) {
                     return Parent.TravelCost + 10;
-                }
-                else {
+                } else {
                     return Parent.TravelCost + 14;
                 }
             }

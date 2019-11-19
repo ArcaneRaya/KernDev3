@@ -25,7 +25,7 @@ public class PathfindingAgent : MonoBehaviour {
     private bool destinationReachedFired;
 
     public void Initialize(IAgent entity) {
-        pathfindingController = GameObject.FindObjectOfType<PathfindingController>();
+        pathfindingController = PathfindingController.Instance;
         this.agent = entity;
         this.currentPath = new Queue<PathfindingNode>();
         this.agent.SetPosition(pathfindingController.Grid.GetClosestWalkableNode(entity.Position).WorldPosition);
@@ -34,8 +34,7 @@ public class PathfindingAgent : MonoBehaviour {
     public void Tick(float elapsedTime) {
         if (currentPath.Count > 0) {
             UpdateMovement(elapsedTime);
-        }
-        else {
+        } else {
             if (destinationReachedFired == false) {
                 if (OnDestinationReachedAction != null) {
                     OnDestinationReachedAction();
@@ -64,8 +63,7 @@ public class PathfindingAgent : MonoBehaviour {
             if (currentPath.Count > 1) {
                 currentPath.Dequeue();
                 currentTarget = currentPath.Peek();
-            }
-            else {
+            } else {
                 currentPath.Dequeue();
                 agent.SetPosition(currentTarget.WorldPosition);
                 if (OnDestinationReachedAction != null) {
