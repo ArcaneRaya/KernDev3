@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnvironmentController : BaseController {
 
-    protected override void OnInitialize(MainController mainController) {
+    protected override void OnInitialize() {
 
     }
 

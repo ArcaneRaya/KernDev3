@@ -11,6 +11,7 @@ public interface IAgent {
 
 public class PathfindingAgent : MonoBehaviour {
 
+    public System.Object OrderedBy { get; private set; }
     public Action OnDestinationReachedAction;
     public bool IsMoving {
         get {
@@ -44,7 +45,9 @@ public class PathfindingAgent : MonoBehaviour {
         }
     }
 
-    public void MoveTowards(Vector3 targetPosition) {
+    public void MoveTowards(Vector3 targetPosition, System.Object orderedBy) {
+        OrderedBy = orderedBy;
+
         Stop();
 
         PathfindingNode targetNode = pathfindingController.Grid.GetClosestWalkableNode(targetPosition);

@@ -21,12 +21,12 @@ public class MainController : MonoSingleton<MainController> {
         pausedUIOverlay.SetActive(true);
     }
 
-    public BaseController GetControllerOfType(Type type) {
+    public static BaseController GetControllerOfType(Type type) {
         if (type.IsSubclassOf(typeof(BaseController)) == false) {
             throw new ArgumentException("Requested type has to be subclass of type: " + typeof(BaseController));
         }
 
-        foreach (BaseController controller in controllers) {
+        foreach (BaseController controller in Instance.controllers) {
             if (controller.GetType() == type) {
                 return controller;
             }
@@ -38,7 +38,7 @@ public class MainController : MonoSingleton<MainController> {
     private void Awake() {
         isGameRunning = false;
         foreach (BaseController controller in controllers) {
-            controller.Initialize(this);
+            controller.Initialize();
         }
     }
 
@@ -64,8 +64,7 @@ public class MainController : MonoSingleton<MainController> {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             if (isGameRunning) {
                 PauseGame();
-            }
-            else {
+            } else {
                 StartGame();
             }
         }

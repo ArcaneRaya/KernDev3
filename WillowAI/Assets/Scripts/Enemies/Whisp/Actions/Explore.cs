@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace WhispActions {
-    public class Collecting : InstanceBoundBehaviour<Whisp> {
+    public class Explore : InstanceBoundBehaviour<Whisp> {
 
         public bool IsCollectingFragment { get; private set; }
         private bool isWithinFragmentRange = false;
         private float timeWaiting;
         private Fragment targetFragment;
 
-        public Collecting(Whisp target) : base(target) {
+        public Explore(Whisp target) : base(target) {
         }
 
         protected override NodeStates MyAction(float deltaTime) {
@@ -41,7 +41,7 @@ namespace WhispActions {
             targetFragment = fragment;
             isWithinFragmentRange = false;
             timeWaiting = 0;
-            target.PathFindingAgent.MoveTowards(fragment.transform.position);
+            target.PathFindingAgent.MoveTowards(fragment.transform.position, this);
             target.PathFindingAgent.OnDestinationReachedAction += OnDestinationReached;
             IsCollectingFragment = true;
         }

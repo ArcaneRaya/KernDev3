@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace WhispActions {
-    public class Exploring : InstanceBoundBehaviour<Whisp> {
+    public class Idle : InstanceBoundBehaviour<Whisp> {
 
         private Vector3 targetPosition = Vector3.zero;
         private bool isTargetSet = false;
@@ -13,7 +13,7 @@ namespace WhispActions {
         private float minWaitTime = 0.4f;
         private float maxWaitTime = 5;
 
-        public Exploring(Whisp target) : base(target) {
+        public Idle(Whisp target) : base(target) {
             ResetWaitTime();
         }
 
@@ -27,7 +27,7 @@ namespace WhispActions {
             }
 
             targetPosition = new Vector3(UnityEngine.Random.Range(-target.distanceWalk, target.distanceWalk), target.transform.position.y, UnityEngine.Random.Range(-target.distanceWalk, target.distanceWalk));
-            target.PathFindingAgent.MoveTowards(targetPosition);
+            target.PathFindingAgent.MoveTowards(targetPosition, this);
             target.PathFindingAgent.OnDestinationReachedAction += OnDestinationReached;
             isTargetSet = true;
             return NodeStates.RUNNING;

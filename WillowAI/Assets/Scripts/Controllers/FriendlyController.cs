@@ -16,8 +16,8 @@ public class FriendlyController : BaseController {
         return robotsInRange;
     }
 
-    protected override void OnInitialize(MainController mainController) {
-        Player player = (mainController.GetControllerOfType(typeof(PlayerController)) as PlayerController).Player;
+    protected override void OnInitialize() {
+        Player player = (MainController.GetControllerOfType(typeof(PlayerController)) as PlayerController).Player;
         foreach (var robot in robots) {
             robot.Initialize(player);
         }

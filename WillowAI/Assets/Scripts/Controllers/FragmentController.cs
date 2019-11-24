@@ -21,7 +21,7 @@ public class FragmentController : BaseController {
         return fragmentsInRange;
     }
 
-    protected override void OnInitialize(MainController mainController) {
+    protected override void OnInitialize() {
 
     }
 

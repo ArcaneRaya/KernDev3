@@ -16,8 +16,8 @@ public class EnemyController : BaseController {
         return whispsInRange;
     }
 
-    protected override void OnInitialize(MainController mainController) {
-        FragmentController fragmentController = mainController.GetControllerOfType(typeof(FragmentController)) as FragmentController;
+    protected override void OnInitialize() {
+        FragmentController fragmentController = MainController.GetControllerOfType(typeof(FragmentController)) as FragmentController;
         foreach (Whisp whisp in whisps) {
             whisp.Initialize(fragmentController);
         }

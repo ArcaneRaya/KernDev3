@@ -58,11 +58,11 @@ public class Player : MonoBehaviour, IAgent {
     }
 
     private void HandleMovement(float deltaTime) {
-        Vector3 inputDirection = HandleMovementInput(deltaTime);
-        pathfindingAgent.MoveTowards(Position + inputDirection * speed);
+        Vector3 inputDirection = HandleMovementInput();
+        pathfindingAgent.MoveTowards(Position + inputDirection * speed, this);
     }
 
-    private Vector3 HandleMovementInput(float deltaTime) {
+    private Vector3 HandleMovementInput() {
         Vector3 moveDirection = Vector3.zero;
         if (Input.GetKey(KeyCode.W)) {
             moveDirection += transform.forward;

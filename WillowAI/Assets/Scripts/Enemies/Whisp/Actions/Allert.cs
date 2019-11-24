@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace WhispActions {
-    public class Allerting : InstanceBoundBehaviour<Whisp> {
+    public class Allert : InstanceBoundBehaviour<Whisp> {
 
         private Player player;
 
-        public Allerting(Whisp target) : base(target) {
+        public Allert(Whisp target) : base(target) {
         }
 
         protected override NodeStates MyAction(float deltaTime) {
             if (player == null) {
-                player = (MainController.Instance.GetControllerOfType(typeof(PlayerController)) as PlayerController).Player;
+                player = (MainController.GetControllerOfType(typeof(PlayerController)) as PlayerController).Player;
             }
 
             bool isPlayerWithinViewRange = (player.Position - target.Position).sqrMagnitude < target.PlayerViewRange * target.PlayerViewRange;
