@@ -5,11 +5,17 @@ using UnityEngine;
 namespace WhispActions {
     public class Allerting : InstanceBoundBehaviour<Whisp> {
 
+        private Player player;
+
         public Allerting(Whisp target) : base(target) {
         }
 
         protected override NodeStates MyAction(float deltaTime) {
-            bool isPlayerWithinViewRange = (Player.Instance.Position - target.Position).sqrMagnitude < target.PlayerViewRange * target.PlayerViewRange;
+            if (player == null) {
+                player = (MainController.Instance.GetControllerOfType(typeof(PlayerController)) as PlayerController).Player;
+            }
+
+            bool isPlayerWithinViewRange = (player.Position - target.Position).sqrMagnitude < target.PlayerViewRange * target.PlayerViewRange;
             if (isPlayerWithinViewRange == false) {
                 return NodeStates.FAILURE;
             }
@@ -19,6 +25,11 @@ namespace WhispActions {
             }
 
             return NodeStates.RUNNING;
+        }
+
+        protected override void OnTerminate() {
+            base.OnTerminate();
+            player = null;
         }
     }
 }

@@ -15,4 +15,8 @@ public class EnvironmentController : BaseController {
     protected override void OnTick(float deltaTime) {
 
     }
+
+    protected override void OnTerminate() {
+
+    }
 }

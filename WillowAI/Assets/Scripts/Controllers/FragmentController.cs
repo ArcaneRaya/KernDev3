@@ -11,10 +11,10 @@ public class FragmentController : BaseController {
 
     private List<Fragment> spawnedFragments = new List<Fragment>();
 
-    public List<Fragment> GetFragmentsInRange(Vector3 position, float pickupRange) {
+    public List<Fragment> GetFragmentsInRange(Vector3 position, float range) {
         List<Fragment> fragmentsInRange = new List<Fragment>();
         foreach (Fragment fragment in spawnedFragments) {
-            if ((fragment.transform.position - position).sqrMagnitude < pickupRange * pickupRange) {
+            if ((fragment.transform.position - position).sqrMagnitude < range * range) {
                 fragmentsInRange.Add(fragment);
             }
         }
@@ -42,6 +42,10 @@ public class FragmentController : BaseController {
     }
 
     protected override void OnTick(float deltaTime) {
+
+    }
+
+    protected override void OnTerminate() {
 
     }
 

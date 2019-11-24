@@ -6,6 +6,16 @@ public class EnemyController : BaseController {
 
     [SerializeField] private List<Whisp> whisps = new List<Whisp>();
 
+    public List<Whisp> GetEnemiesInRange(Vector3 position, float range) {
+        List<Whisp> whispsInRange = new List<Whisp>();
+        foreach (Whisp whisp in whisps) {
+            if ((whisp.transform.position - position).sqrMagnitude < range * range) {
+                whispsInRange.Add(whisp);
+            }
+        }
+        return whispsInRange;
+    }
+
     protected override void OnInitialize(MainController mainController) {
         FragmentController fragmentController = mainController.GetControllerOfType(typeof(FragmentController)) as FragmentController;
         foreach (Whisp whisp in whisps) {
@@ -22,6 +32,12 @@ public class EnemyController : BaseController {
     protected override void OnTick(float deltaTime) {
         foreach (Whisp whisp in whisps) {
             whisp.Tick(deltaTime);
+        }
+    }
+
+    protected override void OnTerminate() {
+        foreach (Whisp whisp in whisps) {
+            whisp.Terminate();
         }
     }
 }

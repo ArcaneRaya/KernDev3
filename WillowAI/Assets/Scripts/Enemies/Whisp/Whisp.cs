@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -19,6 +20,7 @@ public class Whisp : MonoBehaviour, IAgent {
     public float FragmentViewRange { get { return fragmentViewRange; } }
     public float FragmentPickupRange { get { return fragmentPickupRange; } }
     public float FragmentPickupTime { get { return fragmentPickupTime; } }
+
     public bool IsCollecting { get { return (collectingAction as WhispActions.Collecting).IsCollectingFragment; } }
 
     [SerializeField] private PathfindingAgent pathfindingAgent = null;
@@ -56,6 +58,10 @@ public class Whisp : MonoBehaviour, IAgent {
     public void Tick(float deltaTime) {
         pathfindingAgent.Tick(deltaTime);
         BehaviourTree.Tick(deltaTime);
+    }
+
+    public void Terminate() {
+
     }
 
     public void SetPosition(Vector3 position) {

@@ -12,10 +12,10 @@ public class AllertState : BaseState<Whisp> {
     }
 
     protected override void OnTick(float deltaTime) {
-        bool isPlayerWithinViewRange = (Player.Instance.Position - Target.Position).sqrMagnitude < Target.PlayerViewRange * Target.PlayerViewRange;
-        if (isPlayerWithinViewRange == false) {
-            //Target.StateMachine.GoToState(new ExploreState(Target));
-        }
+        //bool isPlayerWithinViewRange = (Player.Instance.Position - Target.Position).sqrMagnitude < Target.PlayerViewRange * Target.PlayerViewRange;
+        //if (isPlayerWithinViewRange == false) {
+        //Target.StateMachine.GoToState(new ExploreState(Target));
+        //}
     }
 
     protected override void OnStop() {

@@ -15,7 +15,12 @@ public abstract class BaseController : MonoBehaviour {
         OnTick(deltaTime);
     }
 
+    public void Terminate() {
+        OnTerminate();
+    }
+
     protected abstract void OnInitialize(MainController mainController);
     protected abstract void OnSetup();
     protected abstract void OnTick(float deltaTime);
+    protected abstract void OnTerminate();
 }

@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class PlayerController : BaseController {
 
-    public Player player;
+    public Player Player;
 
     protected override void OnInitialize(MainController mainController) {
-        player.Initialize(mainController.GetControllerOfType(typeof(FragmentController)) as FragmentController);
+        Player.Initialize(mainController.GetControllerOfType(typeof(FragmentController)) as FragmentController);
     }
 
     protected override void OnSetup() {
-
+        Player.Setup();
     }
 
     protected override void OnTick(float deltaTime) {
-        player.Tick(deltaTime);
+        Player.Tick(deltaTime);
+    }
+
+    protected override void OnTerminate() {
+        Player.Terminate();
     }
 }
