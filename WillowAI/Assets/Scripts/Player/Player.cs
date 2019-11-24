@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoSingleton<Player>, IAgent {
+public class Player : MonoBehaviour, IAgent {
 
     public Vector3 Position {
         get {
@@ -29,10 +29,18 @@ public class Player : MonoSingleton<Player>, IAgent {
         this.fragmentController = fragmentController;
     }
 
+    public void Setup() {
+
+    }
+
     public void Tick(float deltaTime) {
         HandleMovement(deltaTime);
         pathfindingAgent.Tick(deltaTime);
         HandlePickup();
+    }
+
+    public void Terminate() {
+
     }
 
     public void SetPosition(Vector3 position) {
