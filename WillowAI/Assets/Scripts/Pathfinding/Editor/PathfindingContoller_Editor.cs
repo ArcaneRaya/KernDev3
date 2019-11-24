@@ -7,7 +7,7 @@ using UnityEditor;
 public class PathfindingContoller_Editor : Editor {
 
     private SerializedProperty grid;
-    private SerializedObject serializedGridObject;
+    //   private SerializedObject serializedGridObject;
 
     private SerializedProperty gridProperty_floor;
     private SerializedProperty gridProperty_obstacle;
@@ -17,42 +17,47 @@ public class PathfindingContoller_Editor : Editor {
 
     void OnEnable() {
         grid = serializedObject.FindProperty("Grid");
-        if (grid.objectReferenceValue != null) {
-            serializedGridObject = new SerializedObject(grid.objectReferenceValue);
+        //serializedGridObject = new SerializedObject(grid.objectReferenceValue);
 
-            gridProperty_floor = serializedGridObject.FindProperty("Floor");
-            gridProperty_obstacle = serializedGridObject.FindProperty("Obstacle");
-            gridProperty_NodeSize = serializedGridObject.FindProperty("NodeSize");
-            gridProperty_UnitHeight = serializedGridObject.FindProperty("UnitHeight");
-        }
+        gridProperty_floor = grid.FindPropertyRelative("Floor");
+        gridProperty_obstacle = grid.FindPropertyRelative("Obstacle");
+        gridProperty_NodeSize = grid.FindPropertyRelative("NodeSize");
+        gridProperty_UnitHeight = grid.FindPropertyRelative("UnitHeight");
+
     }
 
     public override void OnInspectorGUI() {
         serializedObject.Update();
         EditorGUI.BeginChangeCheck();
+        GUI.enabled = false;
         base.OnInspectorGUI();
-        if (EditorGUI.EndChangeCheck()) {
-            if (grid.objectReferenceValue != null) {
-                serializedGridObject = new SerializedObject(grid.objectReferenceValue);
+        GUI.enabled = true;
+        EditorGUILayout.PropertyField(gridProperty_floor);
+        EditorGUILayout.PropertyField(gridProperty_obstacle);
+        EditorGUILayout.PropertyField(gridProperty_NodeSize);
+        EditorGUILayout.PropertyField(gridProperty_UnitHeight);
+        //if (EditorGUI.EndChangeCheck()) {
+        //    if (grid.objectReferenceValue != null) {
+        //        //serializedGridObject = new SerializedObject(grid.objectReferenceValue);
 
-                gridProperty_floor = serializedGridObject.FindProperty("Floor");
-                gridProperty_obstacle = serializedGridObject.FindProperty("Obstacle");
-                gridProperty_NodeSize = serializedGridObject.FindProperty("NodeSize");
-                gridProperty_UnitHeight = serializedGridObject.FindProperty("UnitHeight");
-            } else {
-                serializedGridObject = null;
-            }
-        }
+        //        gridProperty_floor = grid.FindPropertyRelative("Floor");
+        //        gridProperty_obstacle = grid.FindPropertyRelative("Obstacle");
+        //        gridProperty_NodeSize = grid.FindPropertyRelative("NodeSize");
+        //        gridProperty_UnitHeight = grid.FindPropertyRelative("UnitHeight");
+        //    } else {
+        //        //serializedGridObject = null;
+        //    }
+        //}
         serializedObject.ApplyModifiedProperties();
 
-        if (serializedGridObject != null) {
-            serializedGridObject.Update();
-            EditorGUILayout.PropertyField(gridProperty_floor);
-            EditorGUILayout.PropertyField(gridProperty_obstacle);
-            EditorGUILayout.PropertyField(gridProperty_NodeSize);
-            EditorGUILayout.PropertyField(gridProperty_UnitHeight);
-            serializedGridObject.ApplyModifiedProperties();
-        }
+        //if (serializedGridObject != null) {
+        //    serializedGridObject.Update();
+        //    EditorGUILayout.PropertyField(gridProperty_floor);
+        //    EditorGUILayout.PropertyField(gridProperty_obstacle);
+        //    EditorGUILayout.PropertyField(gridProperty_NodeSize);
+        //    EditorGUILayout.PropertyField(gridProperty_UnitHeight);
+        //    serializedGridObject.ApplyModifiedProperties();
+        //}
 
     }
 }

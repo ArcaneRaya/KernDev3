@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
-public class PathfindingGrid : ScriptableObject {
+//[CreateAssetMenu]
+[System.Serializable]
+public class PathfindingGrid {
 
-    [Header("Settings")]
+    //[Header("Settings")]
     public LayerMask Floor;
     public LayerMask Obstacle;
     public float NodeSize = 1;
@@ -23,21 +24,6 @@ public class PathfindingGrid : ScriptableObject {
             if (node.IsWalkable == false) { continue; }
 
             float newSqrDist = (node.WorldPosition - worldPosition).sqrMagnitude;
-            if (newSqrDist < sqrDist) {
-                sqrDist = newSqrDist;
-                closestNode = node;
-            }
-        }
-
-        return closestNode;
-    }
-
-    public PathfindingNode GetClosestNode(Vector2 gridPosition) {
-        float sqrDist = float.MaxValue;
-        PathfindingNode closestNode = null;
-
-        foreach (PathfindingNode node in Nodes) {
-            float newSqrDist = (node.GridPosition - gridPosition).sqrMagnitude;
             if (newSqrDist < sqrDist) {
                 sqrDist = newSqrDist;
                 closestNode = node;
@@ -81,23 +67,7 @@ public class PathfindingGrid : ScriptableObject {
         return neighbours;
     }
 
-    public void SetRange(PathfindingNode centerNode, float radius, bool isObstacle, bool isWalkable) {
-        int intRange = Mathf.CeilToInt(radius / NodeSize);
-        for (int x = centerNode.GridX - intRange; x <= centerNode.GridX + intRange; x++) {
-            for (int y = centerNode.GridY - intRange; y <= centerNode.GridY + intRange; y++) {
-                if (IsGridPositionWithinBounds(x, y)) {
-                    Nodes[x * columnAmount + y].IsObstacle = isObstacle;
-                    Nodes[x * columnAmount + y].IsWalkable = isWalkable;
-                }
-            }
-        }
-    }
-
-    private bool IsGridPositionWithinBounds(int gridX, int gridY) {
-        return gridX >= 0 && gridY >= 0 && gridX < rowAmount && gridY < columnAmount;
-    }
-
-    [ContextMenu("Generate From Open Scene")]
+    //[ContextMenu("Generate From Open Scene")]
     public void GenerateGridFromOpenScene() {
         Vector3 bottomFrontLeft;
         Vector3 topBackRight;
@@ -206,7 +176,7 @@ public class PathfindingGrid : ScriptableObject {
     }
 
     private GameObject[] FindGameObjectsWithLayerMask(LayerMask mask) {
-        GameObject[] sceneGameObjects = FindObjectsOfType(typeof(GameObject)) as GameObject[];
+        GameObject[] sceneGameObjects = GameObject.FindObjectsOfType(typeof(GameObject)) as GameObject[];
         List<GameObject> matchingList = new List<GameObject>();
         for (int i = 0; i < sceneGameObjects.Length; i++) {
             if ((mask & (1 << sceneGameObjects[i].layer)) > 0) {
