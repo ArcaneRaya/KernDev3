@@ -28,9 +28,6 @@ public class Whisp : MonoBehaviour, IAgent {
     public float FragmentPickupRange { get { return fragmentPickupRange; } }
     public float FragmentPickupTime { get { return fragmentPickupTime; } }
 
-    public bool IsCollecting { get { return (idleAction as WhispActions.Explore).IsCollectingFragment; } }
-
-
     [SerializeField] private PathfindingAgent pathfindingAgent = null;
     [SerializeField] private float speed = 5f;
     [SerializeField] private float rotationSpeed = 5f;
@@ -53,14 +50,15 @@ public class Whisp : MonoBehaviour, IAgent {
     }
 
     public void Setup() {
-        Node MoveToTargetNode = new WhispActions.MoveToTarget(this);
+        Behaviour moveToTargetNode = new WhispActions.MoveToTarget(this);
+        Condition canSeePlayerNode = new WhispConditions.CanSeePlayer(this);
 
         fleeingAction = new Sequence(
-            new WhispConditions.CanSeePlayer(this),
+            canSeePlayerNode,
             new WhispConditions.IsPlayerWithinRange(this, PlayerFleeRange),
             new WhispActions.InvokeDelegate(this, SetLastFleeTimeToNow),
             new WhispActions.SetTargetMovePosition(this, WhispActions.Helpers.AwayFromPlayer),
-            MoveToTargetNode
+            moveToTargetNode
             );
 
         allertingAction = new ActiveSelector(
@@ -68,7 +66,7 @@ public class Whisp : MonoBehaviour, IAgent {
                 new Sequence(
                     new WhispActions.SetTargetLookPosition(this, WhispActions.Helpers.PlayerPosition),
                     new WhispActions.LookAtTarget(this)),
-                new WhispConditions.CanSeePlayer(this)),
+                canSeePlayerNode),
             new Monitor(
                 new Sequence(
                     new WhispActions.SetTargetLookPosition(this, WhispActions.Helpers.RandomPosition),
@@ -83,16 +81,16 @@ public class Whisp : MonoBehaviour, IAgent {
                 new Monitor(
                     new Sequence(
                         new WhispActions.SetTargetMovePosition(this, WhispActions.Helpers.CurrentFragmentTarget),
-                        MoveToTargetNode,
+                        moveToTargetNode,
                         new WhispActions.PickupFragment(this)),
                     new WhispConditions.IsTargetFragmentAlive(this))),
             new Sequence(
                 new Inverter(new WhispConditions.HasMovedRecently(this)),
                 new WhispActions.SetTargetMovePosition(this, WhispActions.Helpers.RandomPosition),
-                MoveToTargetNode)
+                moveToTargetNode)
             );
 
-        idleAction = new WhispActions.WaitRandom(this);
+        idleAction = new WhispActions.WaitRandom(this, 2, 4);
 
         ActiveSelector RootSelector = new ActiveSelector(fleeingAction, allertingAction, exploringAction, idleAction);
         //Sequence RootSequence = new Sequence(new List<Node>() { RootSelector });
