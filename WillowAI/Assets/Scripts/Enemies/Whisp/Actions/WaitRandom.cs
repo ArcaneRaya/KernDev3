@@ -1,13 +1,13 @@
 ﻿using System;
 namespace WhispActions {
-    public class WaitRandom : InstanceBoundBehaviour<Whisp> {
+    public class WaitRandom : InstanceBoundBehaviour<IAgent> {
 
         private float startTime;
         private float waitTime;
         private readonly float minTime;
         private readonly float maxTime;
 
-        public WaitRandom(Whisp target, float minTime, float maxTime) : base(target) {
+        public WaitRandom(IAgent target, float minTime, float maxTime) : base(target) {
             this.minTime = minTime;
             this.maxTime = maxTime;
         }

@@ -2,17 +2,17 @@
 using UnityEngine;
 
 namespace WhispActions {
-    public class SetTargetLookPosition : InstanceBoundBehaviour<Whisp> {
-        private Func<Whisp, Vector3> func;
+    public class SetTargetLookPosition : InstanceBoundBehaviour<IAgent> {
+        private Func<IAgent, Vector3> func;
 
-        public SetTargetLookPosition(Whisp target, Func<Whisp, Vector3> func) : base(target) {
+        public SetTargetLookPosition(IAgent target, Func<IAgent, Vector3> func) : base(target) {
             this.func = func;
         }
 
         protected override void OnInitialize() {
             base.OnInitialize();
 
-            target.TargetLookPosition = func.Invoke(target);
+            target.SetTargetLookPosition(func.Invoke(target));
             currentNodeState = NodeStates.SUCCESS;
         }
 

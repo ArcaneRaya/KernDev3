@@ -17,6 +17,12 @@ public class EnemyController : BaseController {
     }
 
     protected override void OnInitialize() {
+        for (int i = whisps.Count - 1; i >= 0; i--) {
+            if (whisps[0].gameObject.activeSelf == false) {
+                whisps.RemoveAt(i);
+            }
+        }
+
         FragmentController fragmentController = MainController.GetControllerOfType(typeof(FragmentController)) as FragmentController;
         foreach (Whisp whisp in whisps) {
             whisp.Initialize(fragmentController);

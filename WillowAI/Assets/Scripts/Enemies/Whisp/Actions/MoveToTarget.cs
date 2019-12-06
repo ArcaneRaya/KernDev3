@@ -1,9 +1,9 @@
 ﻿using System;
 namespace WhispActions {
-    public class MoveToTarget : InstanceBoundBehaviour<Whisp> {
+    public class MoveToTarget : InstanceBoundBehaviour<IAgent> {
         private bool reachedDestination;
 
-        public MoveToTarget(Whisp target) : base(target) {
+        public MoveToTarget(IAgent target) : base(target) {
         }
 
         protected override void OnInitialize() {

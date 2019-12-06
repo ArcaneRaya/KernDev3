@@ -18,8 +18,9 @@ public class FriendlyController : BaseController {
 
     protected override void OnInitialize() {
         Player player = (MainController.GetControllerOfType(typeof(PlayerController)) as PlayerController).Player;
+        FragmentController fragmentController = MainController.GetControllerOfType(typeof(FragmentController)) as FragmentController;
         foreach (var robot in robots) {
-            robot.Initialize(player);
+            robot.Initialize(player, fragmentController);
         }
     }
 

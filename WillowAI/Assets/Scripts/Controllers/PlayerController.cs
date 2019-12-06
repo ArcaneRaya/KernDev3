@@ -7,7 +7,9 @@ public class PlayerController : BaseController {
     public Player Player;
 
     protected override void OnInitialize() {
-        Player.Initialize(MainController.GetControllerOfType(typeof(FragmentController)) as FragmentController);
+        FragmentController fragmentController = MainController.GetControllerOfType(typeof(FragmentController)) as FragmentController;
+        FriendlyController friendlyController = MainController.GetControllerOfType(typeof(FriendlyController)) as FriendlyController;
+        Player.Initialize(fragmentController, friendlyController);
     }
 
     protected override void OnSetup() {

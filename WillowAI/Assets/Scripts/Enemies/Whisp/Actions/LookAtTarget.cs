@@ -2,9 +2,9 @@
 using UnityEngine;
 
 namespace WhispActions {
-    public class LookAtTarget : InstanceBoundBehaviour<Whisp> {
+    public class LookAtTarget : InstanceBoundBehaviour<IAgent> {
 
-        public LookAtTarget(Whisp target) : base(target) {
+        public LookAtTarget(IAgent target) : base(target) {
         }
 
         protected override void OnInitialize() {
@@ -15,11 +15,11 @@ namespace WhispActions {
         protected override NodeStates MyAction(float deltaTime) {
             Vector3 lookDirection = target.TargetLookPosition - target.Position;
             lookDirection.Normalize();
-            if (Vector3.Angle(target.transform.forward, lookDirection) < 5) {
+            if (Vector3.Angle(target.Transform.forward, lookDirection) < 5) {
                 currentNodeState = NodeStates.SUCCESS;
                 return currentNodeState;
             }
-            target.transform.rotation = Quaternion.Slerp(target.transform.rotation, Quaternion.LookRotation(lookDirection, Vector3.up), target.RotationSpeed * deltaTime);
+            target.Transform.rotation = Quaternion.Slerp(target.Transform.rotation, Quaternion.LookRotation(lookDirection, Vector3.up), target.RotationSpeed * deltaTime);
             return currentNodeState;
         }
     }

@@ -2,12 +2,12 @@
 using UnityEngine;
 
 namespace WhispConditions {
-    public class IsPlayerWithinRange : InstanceBoundCondition<Whisp> {
+    public class IsPlayerWithinRange : InstanceBoundCondition<IAgent> {
 
         private Player player;
         private float range;
 
-        public IsPlayerWithinRange(Whisp target, float range) : base(target) {
+        public IsPlayerWithinRange(IAgent target, float range) : base(target) {
             this.range = range;
         }
 

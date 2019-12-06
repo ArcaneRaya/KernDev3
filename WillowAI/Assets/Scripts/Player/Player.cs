@@ -17,16 +17,27 @@ public class Player : MonoBehaviour, IAgent {
         }
     }
 
+    public Vector3 TargetMovePosition { get; private set; }
+    public PathfindingAgent PathFindingAgent { get { return pathfindingAgent; } }
+
+    public Vector3 TargetLookPosition { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+    public Transform Transform => throw new NotImplementedException();
+
+    public float RotationSpeed => throw new NotImplementedException();
+
     [SerializeField] private PathfindingAgent pathfindingAgent = null;
     [SerializeField] private float speed = 5;
     [SerializeField] private float pickupRange = 2f;
+    [SerializeField] private int collectedFragmentAmount;
 
     private FragmentController fragmentController;
-    private int collectedFragmentAmount;
+    private FriendlyController friendlyController;
 
-    public void Initialize(FragmentController fragmentController) {
+    public void Initialize(FragmentController fragmentController, FriendlyController friendlyController) {
         pathfindingAgent.Initialize(this);
         this.fragmentController = fragmentController;
+        this.friendlyController = friendlyController;
     }
 
     public void Setup() {
@@ -37,6 +48,23 @@ public class Player : MonoBehaviour, IAgent {
         HandleMovement(deltaTime);
         pathfindingAgent.Tick(deltaTime);
         HandlePickup();
+        HandleRobotInteraction();
+    }
+
+    private void HandleRobotInteraction() {
+        if (Input.GetKeyDown(KeyCode.Q)) {
+            List<Robot> robotsInRange = friendlyController.GetFriendliesInRange(Position, pickupRange);
+            foreach (Robot robot in robotsInRange) {
+                if (robot.IsFrozen) {
+                    robot.UnFreeze();
+                } else {
+                    bool exchangeSucceeded = robot.ExchangeFragment();
+                    if (exchangeSucceeded) {
+                        collectedFragmentAmount++;
+                    }
+                }
+            }
+        }
     }
 
     public void Terminate() {
@@ -77,5 +105,17 @@ public class Player : MonoBehaviour, IAgent {
             moveDirection += transform.right;
         }
         return moveDirection.normalized;
+    }
+
+    public void SetTargetMovePosition(Vector3 position) {
+
+    }
+
+    public void SetLastMoveTimeToNow() {
+
+    }
+
+    public void SetTargetLookPosition(Vector3 vector3) {
+
     }
 }

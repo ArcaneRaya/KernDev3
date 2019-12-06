@@ -5,8 +5,17 @@ using UnityEngine;
 
 public interface IAgent {
     Vector3 Position { get; }
+    Vector3 TargetMovePosition { get; }
     float Speed { get; }
+    PathfindingAgent PathFindingAgent { get; }
+    Vector3 TargetLookPosition { get; }
+    Transform Transform { get; }
+    float RotationSpeed { get; }
+
     void SetPosition(Vector3 position);
+    void SetTargetMovePosition(Vector3 position);
+    void SetLastMoveTimeToNow();
+    void SetTargetLookPosition(Vector3 vector3);
 }
 
 public class PathfindingAgent : MonoBehaviour {

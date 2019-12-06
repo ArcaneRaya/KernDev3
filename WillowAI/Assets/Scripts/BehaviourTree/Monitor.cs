@@ -2,7 +2,7 @@
 public class Monitor : Composite {
     private readonly Node nodeToExecute;
 
-    public Monitor(Node nodeToExecute, params Condition[] conditions) : base(conditions) {
+    public Monitor(Node nodeToExecute, params Node[] conditions) : base(conditions) {
         this.nodeToExecute = nodeToExecute ?? throw new System.ArgumentException("Node cannot be null");
     }
 

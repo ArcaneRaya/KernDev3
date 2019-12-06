@@ -1,10 +1,10 @@
 ﻿using System;
 namespace WhispActions {
-    public class PickupFragment : InstanceBoundBehaviour<Whisp> {
+    public class PickupFragment : InstanceBoundBehaviour<IFragmentCollector> {
 
         float timePickingUp;
 
-        public PickupFragment(Whisp target) : base(target) {
+        public PickupFragment(IFragmentCollector target) : base(target) {
         }
 
         protected override void OnInitialize() {

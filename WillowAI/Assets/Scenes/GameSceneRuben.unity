@@ -169,6 +169,7 @@ MonoBehaviour:
   pathfindingAgent: {fileID: 80146858}
   speed: 5
   pickupRange: 2
+  collectedFragmentAmount: 0
 --- !u!65 &80146857
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -252,8 +253,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distanceWalk: 5
-  TargetMovePosition: {x: 0, y: 0, z: 0}
-  TargetLookPosition: {x: 0, y: 0, z: 0}
   pathfindingAgent: {fileID: 102046352}
   speed: 5
   rotationSpeed: 5
@@ -271,8 +270,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 127729929}
+  - component: {fileID: 127729931}
+  - component: {fileID: 127729930}
   m_Layer: 0
-  m_Name: Willow
+  m_Name: Robot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -293,6 +294,38 @@ Transform:
   m_Father: {fileID: 1310469215}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &127729930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127729928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a3ca0e9a3d4e6e41877036740d9d644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &127729931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127729928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d413331f631b04c1b914053ec1df22b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathfindingAgent: {fileID: 127729930}
+  speed: 5
+  rotationSpeed: 5
+  maxFollowPlayerDistance: 8
+  viewRange: 8
+  maxOfferFragmentDistance: 4
+  fragmentViewRange: 10
+  fragmentPickupTime: 1
 --- !u!1 &151629246
 GameObject:
   m_ObjectHideFlags: 0
@@ -710,6 +743,51 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391108110}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &418732897
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 418732898}
+  - component: {fileID: 418732899}
+  m_Layer: 0
+  m_Name: FriendlyController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &418732898
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 418732897}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1597044454}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &418732899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 418732897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76b959cb006e54e1b9a0437b9814e720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  robots:
+  - {fileID: 127729931}
 --- !u!1 &516211283
 GameObject:
   m_ObjectHideFlags: 0
@@ -61933,7 +62011,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1310469215}
   m_Layer: 0
-  m_Name: Willows
+  m_Name: Robots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62122,6 +62200,7 @@ MonoBehaviour:
   - {fileID: 1719183974}
   - {fileID: 2060942998}
   - {fileID: 1535142074}
+  - {fileID: 418732899}
   pausedUIOverlay: {fileID: 151629246}
 --- !u!4 &1597044454
 Transform:
@@ -62138,6 +62217,7 @@ Transform:
   - {fileID: 1719183975}
   - {fileID: 2060942999}
   - {fileID: 1535142075}
+  - {fileID: 418732898}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

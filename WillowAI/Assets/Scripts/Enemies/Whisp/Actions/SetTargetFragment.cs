@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 
 namespace WhispActions {
-    public class SetTargetFragment : InstanceBoundBehaviour<Whisp> {
+    public class SetTargetFragment : InstanceBoundBehaviour<IFragmentCollector> {
 
-        public SetTargetFragment(Whisp target) : base(target) {
+        public SetTargetFragment(IFragmentCollector target) : base(target) {
 
         }
 
         protected override void OnInitialize() {
             base.OnInitialize();
 
-            target.TargetFragment = GetTargetFragment();
+            target.SetTargetFragment(GetTargetFragment());
             if (target.TargetFragment == null) {
                 currentNodeState = NodeStates.FAILURE;
             } else {

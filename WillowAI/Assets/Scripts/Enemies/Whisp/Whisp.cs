@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-public class Whisp : MonoBehaviour, IAgent {
+public class Whisp : MonoBehaviour, IAgent, IFragmentCollector {
 
     public float distanceWalk = 5f;
 
@@ -14,9 +14,10 @@ public class Whisp : MonoBehaviour, IAgent {
     public PathfindingAgent PathFindingAgent { get { return pathfindingAgent; } }
     public FragmentController FragmentController { get; private set; }
     public Vector3 Position { get { return transform.position; } }
-    public Vector3 TargetMovePosition;
-    public Vector3 TargetLookPosition;
-    public Fragment TargetFragment { get; set; }
+    public Vector3 TargetMovePosition { get; private set; }
+    public Vector3 TargetLookPosition { get; private set; }
+    public Fragment TargetFragment { get; private set; }
+    public Transform Transform { get { return transform; } }
 
     public float LastFleeTime { get; private set; }
     public float LastMoveTime { get; private set; }
@@ -27,6 +28,7 @@ public class Whisp : MonoBehaviour, IAgent {
     public float FragmentViewRange { get { return fragmentViewRange; } }
     public float FragmentPickupRange { get { return fragmentPickupRange; } }
     public float FragmentPickupTime { get { return fragmentPickupTime; } }
+    public int FragmentsInPosessionCount { get { return pickedUpFragmentCount; } }
 
     [SerializeField] private PathfindingAgent pathfindingAgent = null;
     [SerializeField] private float speed = 5f;
@@ -51,7 +53,8 @@ public class Whisp : MonoBehaviour, IAgent {
 
     public void Setup() {
         Behaviour moveToTargetNode = new WhispActions.MoveToTarget(this);
-        Condition canSeePlayerNode = new WhispConditions.CanSeePlayer(this);
+        Player player = (MainController.GetControllerOfType(typeof(PlayerController)) as PlayerController).Player;
+        Condition canSeePlayerNode = new WhispConditions.CanSeeAgent(this, player, playerViewRange);
 
         fleeingAction = new Sequence(
             canSeePlayerNode,
@@ -93,14 +96,13 @@ public class Whisp : MonoBehaviour, IAgent {
         idleAction = new WhispActions.WaitRandom(this, 2, 4);
 
         ActiveSelector RootSelector = new ActiveSelector(fleeingAction, allertingAction, exploringAction, idleAction);
-        //Sequence RootSequence = new Sequence(new List<Node>() { RootSelector });
 
         BehaviourTree = new BehaviourTree(RootSelector);
     }
 
-    public void Tick(float deltaTime) {
-        pathfindingAgent.Tick(deltaTime);
-        BehaviourTree.Tick(deltaTime);
+    public void Tick(float elapsedTime) {
+        pathfindingAgent.Tick(elapsedTime);
+        BehaviourTree.Tick(elapsedTime);
     }
 
     public void Terminate() {
@@ -121,5 +123,17 @@ public class Whisp : MonoBehaviour, IAgent {
 
     public void SetLastMoveTimeToNow() {
         LastMoveTime = MainController.Instance.GameTime;
+    }
+
+    public void SetTargetMovePosition(Vector3 position) {
+        TargetMovePosition = position;
+    }
+
+    public void SetTargetLookPosition(Vector3 position) {
+        TargetLookPosition = position;
+    }
+
+    public void SetTargetFragment(Fragment fragment) {
+        TargetFragment = fragment;
     }
 }
