@@ -29,7 +29,7 @@ public class PathfindingController : MonoSingleton<PathfindingController> {
                 Gizmos.color = Color.cyan;
                 Gizmos.DrawWireCube(center, size);
             } else {
-                Debug.Log("whut?!" + node.WorldPosition);
+                //    Debug.Log("whut?!" + node.WorldPosition);
                 continue;
             }
         }
