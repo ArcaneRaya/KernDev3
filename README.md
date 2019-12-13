@@ -2,11 +2,11 @@
 KernDev3 herkansing Ruben Bergshoeff
 
 # Screencap
-https://youtu.be/-f7_UCuRLHk
+https://youtu.be/-f7_UCuRLHk \n
 First you will see some terrain generation, then a bit of the AI's behaviour in game
 
 # Blog
-https://kerndev3ai.blogspot.com/
+https://kerndev3ai.blogspot.com/ \n
 During development I have kept a blog, where you can find UMLs and behaviour trees.
 Some key moments:
 
