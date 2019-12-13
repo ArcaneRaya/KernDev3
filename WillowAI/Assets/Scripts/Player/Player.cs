@@ -17,6 +17,18 @@ public class Player : MonoBehaviour, IAgent {
         }
     }
 
+    public int FragmentsCollected {
+        get {
+            return collectedFragmentAmount;
+        }
+    }
+
+    public bool HasFragmentWithinRange {
+        get {
+            return fragmentController.GetFragmentsInRange(Position, pickupRange).Count > 0;
+        }
+    }
+
     public Vector3 TargetMovePosition { get; private set; }
     public PathfindingAgent PathFindingAgent { get { return pathfindingAgent; } }
     public Transform Transform { get { return transform; } }
@@ -43,6 +55,7 @@ public class Player : MonoBehaviour, IAgent {
 
     public void Tick(float deltaTime) {
         HandleMovement(deltaTime);
+        HandleRotation(deltaTime);
         pathfindingAgent.Tick(deltaTime);
         HandlePickup();
         HandleRobotInteraction();
@@ -67,7 +80,7 @@ public class Player : MonoBehaviour, IAgent {
     }
 
     private void HandleRobotInteraction() {
-        if (Input.GetKeyDown(KeyCode.Q)) {
+        if (Input.GetKeyDown(KeyCode.E)) {
             List<Robot> robotsInRange = friendlyController.GetFriendliesInRange(Position, pickupRange);
             foreach (Robot robot in robotsInRange) {
                 if (robot.IsFrozen) {
@@ -80,6 +93,17 @@ public class Player : MonoBehaviour, IAgent {
                 }
             }
         }
+    }
+
+    private void HandleRotation(float deltaTime) {
+        int desiredDirection = 0;
+        if (Input.GetKey(KeyCode.LeftArrow)) {
+            desiredDirection--;
+        }
+        if (Input.GetKey(KeyCode.RightArrow)) {
+            desiredDirection++;
+        }
+        transform.Rotate(Vector3.up, desiredDirection * 90 * Time.deltaTime);
     }
 
     private void HandleMovement(float deltaTime) {

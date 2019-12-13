@@ -44,6 +44,7 @@ public class Robot : MonoBehaviour, IBehaviourAgent, IFragmentCollector {
     public void Initialize(Player targetPlayer, FragmentController fragmentController) {
         this.targetPlayer = targetPlayer;
         FragmentController = fragmentController;
+        transform.position = targetPlayer.Position + new Vector3(UnityEngine.Random.Range(-5, 5), 0, UnityEngine.Random.Range(-5, 5));
         PathFindingAgent.Initialize(this);
     }
 

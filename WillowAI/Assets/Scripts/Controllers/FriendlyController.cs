@@ -4,6 +4,17 @@ using System.Collections.Generic;
 
 public class FriendlyController : BaseController {
 
+    public bool FriendlyHasFragment {
+        get {
+            foreach (var instance in robots) {
+                if (instance.FragmentsInPosessionCount > 0) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
     [SerializeField] private List<Robot> robots = new List<Robot>();
 
     public List<Robot> GetFriendliesInRange(Vector3 position, float range) {

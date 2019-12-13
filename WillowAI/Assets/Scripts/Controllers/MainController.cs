@@ -8,17 +8,21 @@ public class MainController : MonoSingleton<MainController> {
 
     [SerializeField] private List<BaseController> controllers = new List<BaseController>();
     [SerializeField] private GameObject pausedUIOverlay = null;
+    [SerializeField] private GameObject gameUIOverlay = null;
+    [SerializeField] private GameUIUpdater gameUIUpdater = null;
 
     private bool isGameRunning;
 
     public void StartGame() {
         isGameRunning = true;
         pausedUIOverlay.SetActive(false);
+        gameUIOverlay.SetActive(true);
     }
 
     public void PauseGame() {
         isGameRunning = false;
         pausedUIOverlay.SetActive(true);
+        gameUIOverlay.SetActive(false);
     }
 
     public static BaseController GetControllerOfType(Type type) {
@@ -36,7 +40,7 @@ public class MainController : MonoSingleton<MainController> {
     }
 
     private void Awake() {
-        isGameRunning = false;
+        PauseGame();
         foreach (BaseController controller in controllers) {
             controller.Initialize();
         }
@@ -54,6 +58,7 @@ public class MainController : MonoSingleton<MainController> {
         if (isGameRunning == false) { return; }
 
         GameTime += Time.deltaTime;
+        gameUIUpdater.Tick(Time.deltaTime);
 
         foreach (BaseController controller in controllers) {
             controller.Tick(Time.deltaTime);

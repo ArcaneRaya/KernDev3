@@ -6,8 +6,8 @@ using UnityEngine;
 public class FragmentController : BaseController {
 
     [SerializeField] private Fragment fragmentPrefab = null;
-    [SerializeField] private List<FragmentLocation> potentialFragmentLocations = new List<FragmentLocation>();
     [SerializeField] private int fragmentSpawnAmount = 10;
+    private List<FragmentLocation> potentialFragmentLocations = new List<FragmentLocation>();
 
     private List<Fragment> spawnedFragments = new List<Fragment>();
 
@@ -22,7 +22,7 @@ public class FragmentController : BaseController {
     }
 
     protected override void OnInitialize() {
-
+        potentialFragmentLocations = new List<FragmentLocation>(FindObjectsOfType<FragmentLocation>());
     }
 
     protected override void OnSetup() {
