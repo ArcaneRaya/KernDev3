@@ -2,7 +2,7 @@
 KernDev3 herkansing Ruben Bergshoeff
 
 # Screencap
-https://youtu.be/-f7_UCuRLHk 
+https://youtu.be/-f7_UCuRLHk <br/>
 First you will see some terrain generation, then a bit of the AI's behaviour in game
 
 # Blog
